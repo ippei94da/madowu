@@ -1,0 +1,41 @@
+# coding: utf-8
+# Rakefile for Markdown documents.
+
+MADOWU = "madowu -o -m"
+ENCODING = "UTF-8"
+HTML2PDF = "wkhtmltopdf"
+HTML2PDF_OPTIONS = "-B 1cm -L 1.5cm -R 1.5cm -T 1.5cm -s A4 --encoding #{ENCODING} "
+
+require "pp"
+require "fileutils"
+
+desc "Make .html from .md"
+md_files = FileList["**/*.md"]
+html_files = md_files.ext("html")
+task :md2html => FileList[html_files]
+html_files.each do |html_file|
+  md_file = html_file.ext("md")
+  file html_file => md_file do
+    sh "#{MADOWU} #{md_file}"
+  end
+end
+
+desc "Make .pdf from .html."
+pdf_files = html_files.ext("pdf")
+task :html2pdf => FileList[pdf_files]
+pdf_files.each do |pdf_file|
+  html_file = pdf_file.ext("html")
+  file pdf_file => html_file do
+    sh "#{HTML2PDF} #{HTML2PDF_OPTIONS} #{html_file} #{pdf_file}"
+  end
+end
+
+task :pdf => :html2pdf
+task :default => :md2html
+
+require "rake/clean"
+CLEAN.include( [
+  html_files,
+  pdf_files
+])
+
