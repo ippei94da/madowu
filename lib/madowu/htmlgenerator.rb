@@ -43,7 +43,9 @@ class Madowu::HtmlGenerator
 
   def dir_map
     #pp @md_file
-    results = []
+    parent_entries = []
+    current_entries = []
+    subdirs_entries = []
     md_dir = Pathname.new( @md_file).dirname
     cur_dir_entries = Dir.entries(md_dir).sort.delete_if{|i| i =~ /^\./}
     cur_dir_entries.each do |i|
@@ -52,26 +54,38 @@ class Madowu::HtmlGenerator
       #pp path
       if FileTest.directory?(path)
         if FileTest.exist?(path + "index.html") || FileTest.file?(path + "index.md")
-          results << (path + 'index.html')
+          subdirs_entries << (path + 'index.html')
         else
-          results << (path)
+          subdirs_entries << (path)
         end
       elsif FileTest.file?(path)
         new_path = Pathname.new(path.to_s.sub( /\.md$/, ".html"))
-        results << new_path
+        current_entries << new_path
       else
           # do nothing
       end
     end
-    results.uniq!
+    current_entries.uniq!
 
-    results.map!{|i| i.to_s.sub(/^#{md_dir}\//, '') }
-    results.map!{|i| "  <li> <a href='#{i}'>#{i}</a>"}
-    results.unshift "<ul>"
-    results.push "</ul>"
-    results.unshift "<p>Directory map:</p>"
+    if File.exist?(md_dir.parent + 'index.html')
+      parent_entries << md_dir.parent + 'index.html'
+    else
+      parent_entries << md_dir.parent
+    end
 
-    #pp results
+    results = []
+    results << "<p>Parent directory:</p>"
+    results << "<ul>"
+    parent_entries.each {|i| "  <li> <a href='#{i}'>#{i}</a>"}
+    results << "</ul>"
+    results << "<p>Current directory:</p>"
+    results << "<ul>"
+    current_entries.each {|i| "  <li> <a href='#{i}'>#{i}</a>"}
+    results << "</ul>"
+    results << "<p>Subdirectory:</p>"
+    results << "<ul>"
+    subdirs_entries.each {|i| "  <li> <a href='#{i}'>#{i}</a>"}
+    results << "</ul>"
     results
   end
 

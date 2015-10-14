@@ -103,12 +103,19 @@ HERE
     h03 = Madowu::HtmlGenerator.new("test/dirmap/index.md")
 
     correct = []
-    correct << "<p>Directory map:</p>"
+    correct << "<p>Parent directory:</p>"
+    correct << "<ul>"
+    correct << "  <li> <a href='..'>..</a>"
+    correct << "</ul>"
+    correct << "<p>Current directory:</p>"
+    correct << "<ul>"
+    correct << "  <li> <a href='foo.html'>foo.html</a>"
+    correct << "  <li> <a href='index.html'>index.html</a>"
+    correct << "</ul>"
+    correct << "<p>Sub directory:</p>"
     correct << "<ul>"
     correct << "  <li> <a href='dir1'>dir1</a>"
     correct << "  <li> <a href='dir2/index.html'>dir2/index.html</a>"
-    correct << "  <li> <a href='foo.html'>foo.html</a>"
-    correct << "  <li> <a href='index.html'>index.html</a>"
     correct << "</ul>"
     assert_equal(correct, h03.dir_map)
   end
