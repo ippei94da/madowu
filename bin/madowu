@@ -4,6 +4,7 @@
 require "optparse"
 require "pp"
 require "fileutils"
+require "madowu"
 
 MARKDOWN = "markdown"
 ENCODING = "UTF-8"
@@ -11,45 +12,17 @@ HTML2PDF = "wkhtmltopdf"
 HTML2PDF_OPTIONS = "-B 1cm -L 1.5cm -R 1.5cm -T 1.5cm -s A4 --encoding #{ENCODING} "
 
 ### option analysis
-#OPTIONS = {}
-#op = OptionParser.new
-#op.banner = [
-#  "Usage: #{File.basename("#{__FILE__}")}",
-#].join("\n")
-#op.on("-a"    , "--aho"    , "descriptionA"){    OPTIONS[:aho] = true}
-#op.on("-b val", "--bak=val", "descriptionB"){|v| OPTIONS[:bak] = v}
-#op.parse!(ARGV)
+OPTIONS = {}
+op = OptionParser.new
+op.banner = [
+  "Usage: #{File.basename("#{__FILE__}")}",
+].join("\n")
+op.on("-o"    , "--outline"    , "Embed outline"){    OPTIONS[:outline] = true}
+op.parse!(ARGV)
 
-def get_title(md_file)
-  result = `grep -E '^#' #{md_file} | head -n 1`.sub(/^#\s*/, '').strip
-  result
-end
-
-def make_header(title = '')
-  str = <<HERE
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<HTML lang=\"ja\">
-<head>
-  <title>#{title}</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <link rel="stylesheet" type="text/css" href="theme.css" media="all">
-</head>
-<body>
-<div class="main">
-<div class="body">
-HERE
-end
-
-unless ARGV.size == 1
-  PRINTUSAGE;
-  exit
-end
+#pp OPTIONS
 
 md_file = ARGV[0]
 html_file = md_file.sub(/\.md/, ".html")
-File.open(html_file, "w") do |io|
-  io.puts make_header(get_title(md_file))
-  io.puts `#{MARKDOWN} #{md_file}`
-  io.puts "</div></div></body></html>"
-end
-
+hg = Madowu::HtmlGenerator.new(md_file)
+File.open(html_file, "w") { |io| io.puts hg.generate(OPTIONS) }
