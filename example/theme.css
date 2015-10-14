@@ -1,39 +1,16 @@
 /*
-Title: Hiki
-$Revision: 1.10 $
-Author: TAKEUCHI Hitoshi
-Access: hitoshi@namaraii.com
+Title: Madowu css
+Author: Ippei Kishida
+Original Author: TAKEUCHI Hitoshi
 License: GPL
-Comment: Hikiのデフォルトテーマ
 
-tDiaryのcloverテーマをベースに作成しました。
-オリジナルテーマ作者のただただしさん、NTさんに感謝します。
+Comment: Hikiのデフォルトテーマをベースに作成しました。
+オリジナルテーマ作者のTAKEUCHI Hikiさんに感謝します。
 
 Copyright 2002 (C) by TADA Tadashi <sho@spc.gr.jp>
 Copyright 2002 (C) by NT <nt@24i.net>
 Copyright 2004 (C) by TAKEUCHI Hitoshi <hitoshi@namaraii.com>
 validated by W3C.
-*/
-/* ChangeLog
-2004-01-23 TAKEUCHI Hitoshi <hitoshi@namaraii.com>
-  * modified for Hiki
-
-2002-09-14 NT <nt@24i.net>
-        * convert for 1.5 series.
-
-2002-05-07 TADA Tadashi <sho@spc.gr.jp>
-  * remove overflow from pre.
-  * line-height of body upto 150%.
-
-2002-03-28 TADA Tadashi <sho@spc.gr.jp>
-  * image color down to 7bit.
-  * no underline for links.
-
-2002-03-28 TADA Tadashi <sho@spc.gr.jp>
-  * support new amazon plugin.
-
-2002-03-27 TADA Tadashi <sho@spc.gr.jp>
-  * fix textarea biyo--n problem.
 */
 
 body {
@@ -607,3 +584,33 @@ div.hello {
   font-size: 80%;
   margin-top: 0px;
 }
+
+
+div.header {
+        background-color: #f8f5f1;
+        padding: 1px 18px;
+        font-size   : 12px;
+        line-height:18px;
+        margin-top: 0px;
+}
+
+div.header li,div.header li A:link,div.header li A:visited{
+        text-decoration : none;
+}
+
+div.header li A:hover{
+        text-decoration : underline;
+}
+
+div.header ul li{
+        list-style-image: url('./go_back_1.gif')
+}
+
+div.header ul li ul li{
+        list-style-image: url('./go_back_2.gif')
+}
+
+div.header ul li ul li ul li{
+        list-style-image: url('./go_back_3.gif')
+}
+

@@ -18,6 +18,7 @@ op.banner = [
   "Usage: #{File.basename("#{__FILE__}")}",
 ].join("\n")
 op.on("-o"    , "--outline"    , "Embed outline"){    OPTIONS[:outline] = true}
+op.on("-m"    , "--map-sidebar", "Embed map in sidebar"){ OPTIONS[:map] = true}
 op.parse!(ARGV)
 
 #pp OPTIONS

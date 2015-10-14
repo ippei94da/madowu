@@ -7,14 +7,15 @@ require "helper"
 #require "pkg/klass.rb"
 
 class Madowu::HtmlGenerator
-  public :embed_outline
-  attr_reader :markup_str
+  public :embed_outline, :embed_sidebar, :dir_map
+  attr_reader :markup_lines
 end
 
 class TC_HtmlGenerator < Test::Unit::TestCase
   def setup
     @h00 = Madowu::HtmlGenerator.new("test/empty.md")
     @h01 = Madowu::HtmlGenerator.new("test/head.md")
+    @h02 = Madowu::HtmlGenerator.new("test/head1.md")
   end
 
   def test_generate
@@ -31,55 +32,85 @@ class TC_HtmlGenerator < Test::Unit::TestCase
 <div class="body">
 
 
-
 </div></div></body></html>
 HERE
+    #puts correct
+    #puts '-'*60
+    #puts @h00.generate
+    #puts '-'*60
+    #exit;
     assert_equal( correct, @h00.generate)
   end
 
   def test_embed_outline
-    correct = <<HERE
-<div class='header'>
-<ul class='outline'>
-  <li><a href='#0'>head1</a></ll>
-  <li><a href='#1'>+head2</a></ll>
-  <li><a href='#2'>++head3</a></ll>
-  <li><a href='#3'>+++head4</a></ll>
-  <li><a href='#4'>++++head5</a></ll>
-  <li><a href='#5'>+++++head6</a></ll>
-</ul>
-</div>
-<h1><a name='#0'>head1</a><h1>
-
-<p>line1</p>
-
-<h2><a name='#1'>head2</a><h2>
-
-<p>line2</p>
-
-<h3><a name='#2'>head3</a><h3>
-
-<p>line3</p>
-
-<h4><a name='#3'>head4</a><h4>
-
-<p>line4</p>
-
-<h5><a name='#4'>head5</a><h5>
-
-<p>line5</p>
-
-<h6><a name='#5'>head6</a><h6>
-
-<p>line6</p>
-HERE
+    correct = []
+    correct << "<div class='header'>"
+    correct << "<p>Outline:</p>"
+    correct << "<ul class='outline'>"
+    correct << "  <li><a href='#0'>head1</a></ll>"
+    correct << "  <li><a href='#1'>+head2</a></ll>"
+    correct << "  <li><a href='#2'>++head3</a></ll>"
+    correct << "  <li><a href='#3'>+++head4</a></ll>"
+    correct << "  <li><a href='#4'>++++head5</a></ll>"
+    correct << "  <li><a href='#5'>+++++head6</a></ll>"
+    correct << "</ul>"
+    correct << "</div>"
+    correct << "<h1><a name='0'>head1</a></h1>"
+    correct << ""
+    correct << "<p>line1</p>"
+    correct << ""
+    correct << "<h2><a name='1'>head2</a></h2>"
+    correct << ""
+    correct << "<p>line2</p>"
+    correct << ""
+    correct << "<h3><a name='2'>head3</a></h3>"
+    correct << ""
+    correct << "<p>line3</p>"
+    correct << ""
+    correct << "<h4><a name='3'>head4</a></h4>"
+    correct << ""
+    correct << "<p>line4</p>"
+    correct << ""
+    correct << "<h5><a name='4'>head5</a></h5>"
+    correct << ""
+    correct << "<p>line5</p>"
+    correct << ""
+    correct << "<h6><a name='5'>head6</a></h6>"
+    correct << ""
+    correct << "<p>line6</p>"
     
     @h01.embed_outline
     #puts correct
     #puts "-"*60
-    #puts @h01.markup_str
+    #puts @h01.markup_lines
     #exit
-    assert_equal( correct, @h01.markup_str)
+    assert_equal( correct, @h01.markup_lines)
+  end
+
+  def test_embed_sidebar
+    lines = ['1', '2' ]
+    @h02.embed_sidebar(lines)
+    correct = []
+    correct << "<h1>head1</h1>"
+    correct << "<div class='sidebar'>"
+    correct << "1"
+    correct << "2"
+    correct << "</div>"
+    assert_equal(correct, @h02.markup_lines)
+  end
+
+  def test_dir_map
+    h03 = Madowu::HtmlGenerator.new("test/dirmap/index.md")
+
+    correct = []
+    correct << "<p>Directory map:</p>"
+    correct << "<ul>"
+    correct << "  <li> <a href='dir1'>dir1</a>"
+    correct << "  <li> <a href='dir2/index.html'>dir2/index.html</a>"
+    correct << "  <li> <a href='foo.html'>foo.html</a>"
+    correct << "  <li> <a href='index.html'>index.html</a>"
+    correct << "</ul>"
+    assert_equal(correct, h03.dir_map)
   end
 
 end
