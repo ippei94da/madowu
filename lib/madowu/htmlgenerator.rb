@@ -26,7 +26,7 @@ class Madowu::HtmlGenerator
     embed_sidebar(dir_map) if options[:map]
 
     result = [
-      make_header,
+      make_header(options[:css]),
       @markup_lines,
       "</div></div></body></html>",
       ''
@@ -68,23 +68,26 @@ class Madowu::HtmlGenerator
     current_entries.uniq!
 
     if File.exist?(md_dir.parent + 'index.html')
-      parent_entries << md_dir.parent + 'index.html'
+      parent_entries << '../index.html'
     else
-      parent_entries << md_dir.parent
+      parent_entries << '../'
     end
+    #pp parent_entries
+    current_entries.map! {|i| i.to_s.sub(/^#{md_dir}\//, '')}
+    subdirs_entries.map! {|i| i.to_s.sub(/^#{md_dir}\//, '')}
 
     results = []
     results << "<p>Parent directory:</p>"
     results << "<ul>"
-    parent_entries.each {|i| "  <li> <a href='#{i}'>#{i}</a>"}
+    parent_entries.each {|i| results << "  <li> <a href='#{i.to_s}'>#{i}</a>"}
     results << "</ul>"
     results << "<p>Current directory:</p>"
     results << "<ul>"
-    current_entries.each {|i| "  <li> <a href='#{i}'>#{i}</a>"}
+    current_entries.each {|i| results << "  <li> <a href='#{i}'>#{i}</a>"}
     results << "</ul>"
     results << "<p>Subdirectory:</p>"
     results << "<ul>"
-    subdirs_entries.each {|i| "  <li> <a href='#{i}'>#{i}</a>"}
+    subdirs_entries.each {|i| results << "  <li> <a href='#{i}'>#{i}</a>"}
     results << "</ul>"
     results
   end
@@ -110,27 +113,34 @@ class Madowu::HtmlGenerator
     outlines << "</ul>"
     outlines << "</div>"
 
-    #pp outlines
-    #pp new_lines
-
     @markup_lines = outlines + new_lines
   end
 
-  def make_header
+  def make_header(css)
     title = `grep -E '^#' #{@md_file} | head -n 1`.sub(/^#\s*/, '').strip
 
-    str = <<HERE
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<HTML lang=\"ja\">
-<head>
-  <title>#{title}</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <link rel="stylesheet" type="text/css" href="theme.css" media="all">
-</head>
-<body>
-<div class="main">
-<div class="body">
-HERE
+    results = []
+    results << "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>"
+    results << "<HTML lang=\'ja\'>"
+    results << "<head>"
+    results << "  <title>#{title}</title>"
+    results << "  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>"
+
+    if css
+      if File.exist? css
+        md_dir = Pathname.new(@md_file).dirname.expand_path
+        css_path = Pathname.new(css).expand_path
+        rel_path = css_path.relative_path_from(md_dir)
+        #pp md_dir
+        #pp css_path
+        #pp rel_path
+        results << "  <link rel='stylesheet' type='text/css' href='#{rel_path}' media='all'>"
+      end
+    end
+    results << "</head>"
+    results << "<body>"
+    results << "<div class='main'>"
+    results << "<div class='body'>"
   end
 
 end

@@ -19,27 +19,41 @@ class TC_HtmlGenerator < Test::Unit::TestCase
   end
 
   def test_generate
-    correct = <<HERE
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<HTML lang=\"ja\">
-<head>
-  <title></title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <link rel="stylesheet" type="text/css" href="theme.css" media="all">
-</head>
-<body>
-<div class="main">
-<div class="body">
-
-
-</div></div></body></html>
-HERE
-    #puts correct
-    #puts '-'*60
-    #puts @h00.generate
-    #puts '-'*60
-    #exit;
+    correct = []
+    correct << "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>"
+    correct << "<HTML lang=\'ja\'>"
+    correct << "<head>"
+    correct << "  <title></title>"
+    correct << "  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>"
+    correct << "</head>"
+    correct << "<body>"
+    correct << "<div class='main'>"
+    correct << "<div class='body'>"
+    correct << ""
+    correct << "</div></div></body></html>"
+    correct << ""
+    correct = correct.join("\n")
     assert_equal( correct, @h00.generate)
+
+
+    h04 = Madowu::HtmlGenerator.new("test/subdir/empty.md")
+    options = {:css => "test/test.css"}
+    correct = []
+    correct << "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>"
+    correct << "<HTML lang=\'ja\'>"
+    correct << "<head>"
+    correct << "  <title></title>"
+    correct << "  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>"
+    correct << "  <link rel='stylesheet' type='text/css' href='../test.css' media='all'>"
+    correct << "</head>"
+    correct << "<body>"
+    correct << "<div class='main'>"
+    correct << "<div class='body'>"
+    correct << ""
+    correct << "</div></div></body></html>"
+    correct << ""
+    correct = correct.join("\n")
+    assert_equal( correct, h04.generate(options))
   end
 
   def test_embed_outline
@@ -105,14 +119,14 @@ HERE
     correct = []
     correct << "<p>Parent directory:</p>"
     correct << "<ul>"
-    correct << "  <li> <a href='..'>..</a>"
+    correct << "  <li> <a href='../'>../</a>"
     correct << "</ul>"
     correct << "<p>Current directory:</p>"
     correct << "<ul>"
     correct << "  <li> <a href='foo.html'>foo.html</a>"
     correct << "  <li> <a href='index.html'>index.html</a>"
     correct << "</ul>"
-    correct << "<p>Sub directory:</p>"
+    correct << "<p>Subdirectory:</p>"
     correct << "<ul>"
     correct << "  <li> <a href='dir1'>dir1</a>"
     correct << "  <li> <a href='dir2/index.html'>dir2/index.html</a>"

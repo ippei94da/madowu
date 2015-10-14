@@ -17,6 +17,7 @@ op = OptionParser.new
 op.banner = [
   "Usage: #{File.basename("#{__FILE__}")}",
 ].join("\n")
+op.on("-c css_file", "--css=file", "Indicate css file"){|v| OPTIONS[:css] = v}
 op.on("-o"    , "--outline"    , "Embed outline"){    OPTIONS[:outline] = true}
 op.on("-m"    , "--map-sidebar", "Embed map in sidebar"){ OPTIONS[:map] = true}
 op.parse!(ARGV)

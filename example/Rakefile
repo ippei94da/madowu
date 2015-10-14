@@ -1,7 +1,7 @@
 # coding: utf-8
 # Rakefile for Markdown documents.
 
-MADOWU = "madowu -o -m"
+MADOWU = "madowu -o -m -c madowu.css"
 ENCODING = "UTF-8"
 HTML2PDF = "wkhtmltopdf"
 HTML2PDF_OPTIONS = "-B 1cm -L 1.5cm -R 1.5cm -T 1.5cm -s A4 --encoding #{ENCODING} "
@@ -19,6 +19,8 @@ html_files.each do |html_file|
     sh "#{MADOWU} #{md_file}"
   end
 end
+#pp md_files
+#pp html_files
 
 desc "Make .pdf from .html."
 pdf_files = html_files.ext("pdf")
