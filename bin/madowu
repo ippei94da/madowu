@@ -14,7 +14,8 @@ HTML2PDF_OPTIONS = "-B 1cm -L 1.5cm -R 1.5cm -T 1.5cm -s A4 --encoding #{ENCODIN
 OPTIONS = {}
 op = OptionParser.new
 op.banner = [
-  "Usage: #{File.basename("#{__FILE__}")}",
+  "Usage: #{File.basename("#{__FILE__}")} [options] foo.md",
+  "      You can see help with '#{File.basename("#{__FILE__}")} --help'.",
 ].join("\n")
 op.on("-c css_file", "--css=file", "Indicate css file"){|v| OPTIONS[:css] = v}
 op.on("-o"    , "--outline"    , "Embed outline"){    OPTIONS[:outline] = true}
@@ -23,6 +24,11 @@ op.on("-m markdown"    , "--markdown=command", "Indicate Markdown command"){|v| 
 op.parse!(ARGV)
 
 #pp OPTIONS
+
+unless ARGV.size == 1
+  puts op.banner
+  exit
+end
 
 md_file = ARGV[0]
 html_file = md_file.sub(/\.md/, ".html")

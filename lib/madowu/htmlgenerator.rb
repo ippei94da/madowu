@@ -10,7 +10,7 @@ class Madowu::HtmlGenerator
   #
   def initialize(md_file, markdown = DEFAULT_MARKDOWN_COMMAND)
     @md_file = md_file
-    @markup_lines = `#{MARKDOWN_COMMAND} #{@md_file}`.split("\n")
+    @markup_lines = `#{markdown} #{@md_file}`.split("\n")
   end
 
   #unless ARGV.size == 1
