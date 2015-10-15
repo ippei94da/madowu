@@ -10,7 +10,8 @@ class Madowu::HtmlGenerator
   #
   def initialize(md_file, markdown = DEFAULT_MARKDOWN_COMMAND)
     @md_file = md_file
-    @markup_lines = `#{markdown} #{@md_file}`.split("\n")
+    @markdown = markdown || DEFAULT_MARKDOWN_COMMAND
+    @markup_lines = `#{@markdown} #{@md_file}`.split("\n")
   end
 
   #unless ARGV.size == 1
@@ -105,7 +106,7 @@ class Madowu::HtmlGenerator
       new_line = line
       if /^\<h(\d)\>(.*)\<\/h(\d)\>$/ =~ line
         new_line = "<h#{$1}><a name='#{counter.to_s}'>#{$2}</a></h#{$3}>"
-        outlines << "  <li><a href='\##{counter}'>#{'+' * ($1.to_i-1)}#{$2}</a></ll>"
+        outlines << "  <li><a href='\##{counter}'>#{' + ' * ($1.to_i-1)}#{$2}</a></ll>"
         counter += 1
       end
       new_lines << new_line

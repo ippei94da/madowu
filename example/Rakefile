@@ -1,7 +1,7 @@
 # coding: utf-8
 # Rakefile for Markdown documents.
 
-MADOWU = "madowu -o -m -c madowu.css"
+MADOWU = "madowu -o -d -c madowu.css"
 ENCODING = "UTF-8"
 HTML2PDF = "wkhtmltopdf"
 HTML2PDF_OPTIONS = "-B 1cm -L 1.5cm -R 1.5cm -T 1.5cm -s A4 --encoding #{ENCODING} "
