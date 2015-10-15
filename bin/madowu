@@ -6,7 +6,6 @@ require "pp"
 require "fileutils"
 require "madowu"
 
-MARKDOWN = "markdown"
 ENCODING = "UTF-8"
 HTML2PDF = "wkhtmltopdf"
 HTML2PDF_OPTIONS = "-B 1cm -L 1.5cm -R 1.5cm -T 1.5cm -s A4 --encoding #{ENCODING} "
@@ -19,12 +18,13 @@ op.banner = [
 ].join("\n")
 op.on("-c css_file", "--css=file", "Indicate css file"){|v| OPTIONS[:css] = v}
 op.on("-o"    , "--outline"    , "Embed outline"){    OPTIONS[:outline] = true}
-op.on("-m"    , "--map-sidebar", "Embed map in sidebar"){ OPTIONS[:map] = true}
+op.on("-d"    , "--dirmap-side", "Embed directory map in sidebar"){ OPTIONS[:dirmap] = true}
+op.on("-m markdown"    , "--markdown=command", "Indicate Markdown command"){|v| OPTIONS[:markdown] = v}
 op.parse!(ARGV)
 
 #pp OPTIONS
 
 md_file = ARGV[0]
 html_file = md_file.sub(/\.md/, ".html")
-hg = Madowu::HtmlGenerator.new(md_file)
+hg = Madowu::HtmlGenerator.new(md_file, OPTIONS[:markdown])
 File.open(html_file, "w") { |io| io.puts hg.generate(OPTIONS) }

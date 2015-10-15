@@ -5,10 +5,10 @@
 #
 #
 class Madowu::HtmlGenerator
-  MARKDOWN_COMMAND = 'markdown'
+  DEFAULT_MARKDOWN_COMMAND = 'markdown'
 
   #
-  def initialize(md_file)
+  def initialize(md_file, markdown = DEFAULT_MARKDOWN_COMMAND)
     @md_file = md_file
     @markup_lines = `#{MARKDOWN_COMMAND} #{@md_file}`.split("\n")
   end
@@ -23,7 +23,7 @@ class Madowu::HtmlGenerator
   def generate(options = {})
     embed_outline if options[:outline]
 
-    embed_sidebar(dir_map) if options[:map]
+    embed_sidebar(dir_map) if options[:dirmap]
 
     result = [
       make_header(options[:css]),
