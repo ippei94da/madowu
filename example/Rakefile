@@ -9,7 +9,16 @@ HTML2PDF_OPTIONS = "-B 1cm -L 1.5cm -R 1.5cm -T 1.5cm -s A4 --encoding #{ENCODIN
 require "pp"
 require "fileutils"
 
-desc "Make .html from .md"
+#desk "Make .sidebar"
+#全ディレクトリ.each do |dir|
+#  dirpath = Pathname.new(dir)
+#  parentdir = dirpath.parent
+#  dir/.dirmap.html => [dir, parentdir/index.html ] do
+#    dirmap > dir/.dirmap.html
+#  end
+#end
+
+desc "Make *.html from *.md"
 md_files = FileList["**/*.md"]
 html_files = md_files.ext("html")
 task :md2html => FileList[html_files]
@@ -22,7 +31,7 @@ end
 #pp md_files
 #pp html_files
 
-desc "Make .pdf from .html."
+desc "Make *.pdf from *.html"
 pdf_files = html_files.ext("pdf")
 task :html2pdf => FileList[pdf_files]
 pdf_files.each do |pdf_file|
