@@ -19,7 +19,7 @@ op.banner = [
 ].join("\n")
 op.on("-c css_file", "--css=file", "Indicate css file"){|v| OPTIONS[:css] = v}
 op.on("-o"    , "--outline"    , "Embed outline"){    OPTIONS[:outline] = true}
-op.on("-d"    , "--dirmap-side", "Embed directory map in sidebar"){ OPTIONS[:dirmap] = true}
+op.on("-s file"    , "--side", "Read file for sidebar"){|v|OPTIONS[:sidebar] = v}
 op.on("-m markdown"    , "--markdown=command", "Indicate Markdown command"){|v| OPTIONS[:markdown] = v}
 op.parse!(ARGV)
 

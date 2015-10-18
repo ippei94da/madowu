@@ -7,7 +7,7 @@ require "helper"
 #require "pkg/klass.rb"
 
 class Madowu::HtmlGenerator
-  public :embed_outline, :embed_sidebar, :dir_map
+  public :embed_outline, :embed_sidebar
   attr_reader :markup_lines
 end
 
@@ -111,27 +111,6 @@ class TC_HtmlGenerator < Test::Unit::TestCase
     correct << "2"
     correct << "</div>"
     assert_equal(correct, @h02.markup_lines)
-  end
-
-  def test_dir_map
-    h03 = Madowu::HtmlGenerator.new("test/dirmap/index.md")
-
-    correct = []
-    correct << "<p>Parent directory:</p>"
-    correct << "<ul>"
-    correct << "  <li> <a href='../'>../</a>"
-    correct << "</ul>"
-    correct << "<p>Current directory:</p>"
-    correct << "<ul>"
-    correct << "  <li> <a href='foo.html'>foo.html</a>"
-    correct << "  <li> <a href='index.html'>index.html</a>"
-    correct << "</ul>"
-    correct << "<p>Subdirectory:</p>"
-    correct << "<ul>"
-    correct << "  <li> <a href='dir1'>dir1</a>"
-    correct << "  <li> <a href='dir2/index.html'>dir2/index.html</a>"
-    correct << "</ul>"
-    assert_equal(correct, h03.dir_map)
   end
 
 end

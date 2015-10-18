@@ -1,22 +1,29 @@
 # coding: utf-8
 # Rakefile for Markdown documents.
 
-MADOWU = "madowu -o -d -c madowu.css"
+DIRMAP_HTML = '.dirmap.html'
 ENCODING = "UTF-8"
 HTML2PDF = "wkhtmltopdf"
 HTML2PDF_OPTIONS = "-B 1cm -L 1.5cm -R 1.5cm -T 1.5cm -s A4 --encoding #{ENCODING} "
 
 require "pp"
 require "fileutils"
+require "pathname"
 
-#desk "Make .sidebar"
-#全ディレクトリ.each do |dir|
-#  dirpath = Pathname.new(dir)
-#  parentdir = dirpath.parent
-#  dir/.dirmap.html => [dir, parentdir/index.html ] do
-#    dirmap > dir/.dirmap.html
-#  end
-#end
+desc "Make .sidebar"
+dirmaps = []
+#Dir.glob("**/*").each do |path|
+Dir.glob(['.', "**"]).each do |path|
+  next unless FileTest.directory? path
+
+  dirpath = Pathname.new(path)
+  dirmap = "#{dirpath}/#{DIRMAP_HTML}"
+  dirmaps << dirmap
+  file dirmap => [dirpath, dirpath.parent] do
+    sh "dirmap #{dirpath} > #{dirpath}/.dirmap.html"
+  end
+end
+task :dirmaps => dirmaps
 
 desc "Make *.html from *.md"
 md_files = FileList["**/*.md"]
@@ -24,12 +31,12 @@ html_files = md_files.ext("html")
 task :md2html => FileList[html_files]
 html_files.each do |html_file|
   md_file = html_file.ext("md")
-  file html_file => md_file do
-    sh "#{MADOWU} #{md_file}"
+  md_path = Pathname.new( md_file)
+  dirmap = md_path.dirname + DIRMAP_HTML
+  file html_file => [md_file, dirmap] do
+    sh "madowu -o -s #{dirmap} -c madowu.css #{md_file}"
   end
 end
-#pp md_files
-#pp html_files
 
 desc "Make *.pdf from *.html"
 pdf_files = html_files.ext("pdf")

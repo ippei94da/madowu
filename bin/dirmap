@@ -1,0 +1,30 @@
+#! /usr/bin/env ruby
+# coding: utf-8
+
+require "optparse"
+require "pathname"
+require "pp"
+require "madowu"
+
+### option analysis
+OPTIONS = {}
+op = OptionParser.new
+op.banner = [
+  "Usage: #{File.basename("#{__FILE__}")} dir_path",
+  "   Note that indicate directory, not file."
+].join("\n")
+#op.on("-a"    , "--aho"    , "descriptionA"){    OPTIONS[:aho] = true}
+#op.on("-b val", "--bak=val", "descriptionB"){|v| OPTIONS[:bak] = v}
+#op.parse!(ARGV)
+
+unless ARGV.size == 1
+  puts op.banner
+  exit
+end
+
+unless FileTest.directory? ARGV[0] 
+  puts op.banner
+  exit
+end
+
+puts Madowu::DirectoryMapper.dirmap(ARGV[0])
