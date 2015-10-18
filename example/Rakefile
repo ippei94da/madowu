@@ -12,13 +12,18 @@ require "pathname"
 
 desc "Make .sidebar"
 dirmaps = []
-Dir.glob(['.', "**"]).each do |path|
+
+#pp Dir.glob(['.', "**/*"]); exit
+Dir.glob(['.', "**/*"]).each do |path|
+
+
   next unless FileTest.directory? path
 
   dirpath = Pathname.new(path)
   dirmap = "#{dirpath}/#{DIRMAP_HTML}"
   dirmap.sub!(/^\.\//, '')
   dirmaps << dirmap
+  #pp dirmap
   file dirmap => [dirpath, dirpath.parent] do
     sh "dirmap #{dirpath} > #{dirpath}/#{DIRMAP_HTML}"
   end
