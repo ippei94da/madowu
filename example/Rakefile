@@ -12,17 +12,18 @@ require "pathname"
 
 desc "Make .sidebar"
 dirmaps = []
-#Dir.glob("**/*").each do |path|
 Dir.glob(['.', "**"]).each do |path|
   next unless FileTest.directory? path
 
   dirpath = Pathname.new(path)
   dirmap = "#{dirpath}/#{DIRMAP_HTML}"
+  dirmap.sub!(/^\.\//, '')
   dirmaps << dirmap
   file dirmap => [dirpath, dirpath.parent] do
-    sh "dirmap #{dirpath} > #{dirpath}/.dirmap.html"
+    sh "dirmap #{dirpath} > #{dirpath}/#{DIRMAP_HTML}"
   end
 end
+#pp dirmaps
 task :dirmaps => dirmaps
 
 desc "Make *.html from *.md"
@@ -54,6 +55,7 @@ task :default => :md2html
 require "rake/clean"
 CLEAN.include( [
   html_files,
-  pdf_files
+  pdf_files,
+  dirmaps,
 ])
 

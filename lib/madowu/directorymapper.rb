@@ -27,35 +27,38 @@ class Madowu::DirectoryMapper
     cur_dir_entries = Dir.entries(md_dir).sort.delete_if{|i| i =~ /^\./}
     cur_dir_entries.each do |i|
       path = md_dir + i
+      anchor = i
       if FileTest.directory?(path)
         if FileTest.file?(path + "index.md")
           link_path = (path + "index.html")
-          anchor =  self.anchor_text((path + "index.md").to_s)
+          title = self.anchor_text((path + "index.md").to_s)
         elsif FileTest.exist?(path + "index.html")
           link_path = path + "index.html"
-          anchor =  self.anchor_text((path + "index.html").to_s)
+          title = self.anchor_text((path + "index.html").to_s)
         else
           link_path = path
-          anchor = path
+          title = nil
         end
-      elsif FileTest.file?(path)
+        anchor += "/"
+      else
         if path.fnmatch?('*.md')
           link_path = Pathname.new(path.sub_ext('.html'))
+          anchor = link_path
           next if FileTest.exist? link_path
-          #anchor =  self.anchor_text((path + "index.md").to_s)
-          anchor =  self.anchor_text((path.to_s))
+          title = self.anchor_text((path.to_s))
         elsif path.fnmatch?('*.html')
           link_path = Pathname.new(path.sub_ext('.html'))
-          #next if FileTest.exist? link_path
-          pp path.to_s
-          anchor =  self.anchor_text(path.to_s)
+          title = self.anchor_text(path.to_s)
+        else
+          link_path = path
+          title = nil
         end
-      else
-        #next
-        #results << "  <li> <a href='#{i}'>#{i}</a>"}
       end
       link_path = link_path.to_s.sub(/^#{md_dir}\//, '')
-      results << "  <li> <a href='#{link_path}'>#{anchor}</a>"
+      anchor = anchor.to_s.sub(/^#{md_dir}\//, '')
+      line = "  <li> <a href='#{link_path}'>#{anchor}</a>"
+      line += "(#{title})" if title
+      results << line
     end
     results << "</ul>"
     results
