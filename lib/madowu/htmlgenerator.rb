@@ -27,6 +27,11 @@ class Madowu::HtmlGenerator
   def generate(options = {})
     embed_outline if options[:outline]
 
+    if options[:dirmap]
+      md_dir = Pathname.new(@md_file).dirname.expand_path
+      embed_sidebar( Madowu::DirectoryMapper.dirmap(md_dir) )
+    end
+
     if options[:sidebar]
       lines = File.open( options[:sidebar], "r").readlines
       embed_sidebar(lines)

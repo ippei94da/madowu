@@ -25,38 +25,33 @@ class TC_Klass < Test::Unit::TestCase
     correct << "</ul>"
     assert_equal(correct, Madowu::DirectoryMapper.dirmap("test/directorymapper/dir2"))
 
-    #checklink filename
-    #     index.md  index.html
-    #dir1 no        no
-    #dir2 no        yes
-    #dir3 yes       no
-    #dir4 yes       yes
+    #pp Madowu::DirectoryMapper.dirmap("/home/ippei/doc/bookmark/")
 
-    #anchor text using header in index.md
 
 
   end
 
-  def test_anchor_text
+  def test_get_title
     # markdown without heading
-    assert_equal('empty.html',
-      Madowu::DirectoryMapper.anchor_text('test/directorymapper/empty.md')
+    #assert_equal('empty.html',
+    assert_equal('',
+      Madowu::DirectoryMapper.get_title('test/directorymapper/empty.md')
     )
 
     # markdown without heading
     
     assert_equal('head1',
-      Madowu::DirectoryMapper.anchor_text('test/directorymapper/head.md')
+      Madowu::DirectoryMapper.get_title('test/directorymapper/head.md')
     )
 
     # html
     assert_equal('title_index.html',
-      Madowu::DirectoryMapper.anchor_text('test/directorymapper/title.html')
+      Madowu::DirectoryMapper.get_title('test/directorymapper/title.html')
     )
 
     # dir
     assert_equal('dir1/',
-      Madowu::DirectoryMapper.anchor_text('test/directorymapper/dir1')
+      Madowu::DirectoryMapper.get_title('test/directorymapper/dir1')
     )
 
 

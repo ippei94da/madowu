@@ -31,10 +31,10 @@ class Madowu::DirectoryMapper
       if FileTest.directory?(path)
         if FileTest.file?(path + "index.md")
           link_path = (path + "index.html")
-          title = self.anchor_text((path + "index.md").to_s)
+          title = self.get_title((path + "index.md").to_s)
         elsif FileTest.exist?(path + "index.html")
           link_path = path + "index.html"
-          title = self.anchor_text((path + "index.html").to_s)
+          title = self.get_title((path + "index.html").to_s)
         else
           link_path = path
           title = nil
@@ -44,11 +44,11 @@ class Madowu::DirectoryMapper
         if path.fnmatch?('*.md')
           link_path = Pathname.new(path.sub_ext('.html'))
           anchor = link_path
-          next if FileTest.exist? link_path
-          title = self.anchor_text((path.to_s))
+          title = self.get_title((path.to_s))
         elsif path.fnmatch?('*.html')
+          next if FileTest.exist? (path.sub_ext('.md'))
           link_path = Pathname.new(path.sub_ext('.html'))
-          title = self.anchor_text(path.to_s)
+          title = self.get_title(path.to_s)
         else
           link_path = path
           title = nil
@@ -57,28 +57,26 @@ class Madowu::DirectoryMapper
       link_path = link_path.to_s.sub(/^#{md_dir}\//, '')
       anchor = anchor.to_s.sub(/^#{md_dir}\//, '')
       line = "  <li> <a href='#{link_path}'>#{anchor}</a>"
-      line += "(#{title})" if title
+      line += "(#{title})" unless title.to_s.empty?
       results << line
     end
     results << "</ul>"
     results
   end
 
-  def self.anchor_text(path)
+  def self.get_title(path)
     if FileTest.directory?(path)
       result = Pathname.new(path).basename.to_s + "/"
     else
       if /\.md$/ =~ path
         result = Madowu::HtmlGenerator.get_title(path)
         if result.empty?
-          result = Pathname.new(path).
-            sub_ext('.html').
-            basename
+          result = ''
         end
       elsif /\.html$/ =~ path
         line = `grep \\<title\\> #{path}`
         /\<title\>(.*)\<\/title\>/ =~ line
-        result = $1
+        result = $1 || ''
         result = Pathname.new(path).basename if result.empty?
       end
     end
