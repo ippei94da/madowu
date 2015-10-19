@@ -44,6 +44,13 @@ html_files.each do |html_file|
   end
 end
 
+desc "Update mtime of all html files"
+task :tree => :md2html do
+  html_files.each do |html_file|
+    File.utime(Time.now, Time.now, html_file)
+  end
+end
+
 desc "Make *.pdf from *.html"
 pdf_files = html_files.ext("pdf")
 task :html2pdf => FileList[pdf_files]
@@ -54,8 +61,9 @@ pdf_files.each do |pdf_file|
   end
 end
 
+
 task :pdf => :html2pdf
-task :default => :md2html
+task :default => :tree
 
 require "rake/clean"
 CLEAN.include( [
