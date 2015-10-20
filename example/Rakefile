@@ -40,7 +40,7 @@ html_files.each do |html_file|
   #file html_file => [md_file, dirmap] do
   file html_file => [md_file, dirpath, dirpath.parent] do
     #sh "madowu -o -s #{dirmap} -c madowu.css #{md_file}"
-    sh "madowu -o -d -c madowu.css #{md_file}"
+    sh "madowu -o -d -c madowu.css -C UTF-8 #{md_file}"
   end
 end
 

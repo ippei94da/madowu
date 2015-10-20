@@ -24,7 +24,7 @@ class TC_HtmlGenerator < Test::Unit::TestCase
     correct << "<HTML lang=\'ja\'>"
     correct << "<head>"
     correct << "  <title></title>"
-    correct << "  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>"
+    correct << "  <meta http-equiv='Content-Type' content='text/html; charset=us-ascii'>"
     correct << "</head>"
     correct << "<body>"
     correct << "<div class='main'>"
@@ -35,6 +35,23 @@ class TC_HtmlGenerator < Test::Unit::TestCase
     correct = correct.join("\n")
     assert_equal( correct, @h00.generate)
 
+    # charset
+    correct = []
+    correct << "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>"
+    correct << "<HTML lang=\'ja\'>"
+    correct << "<head>"
+    correct << "  <title></title>"
+    correct << "  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>"
+    correct << "</head>"
+    correct << "<body>"
+    correct << "<div class='main'>"
+    correct << "<div class='body'>"
+    correct << ""
+    correct << "</div></div></body></html>"
+    correct << ""
+    correct = correct.join("\n")
+    assert_equal( correct, @h00.generate({:charset => "UTF-8"}))
+
 
     h04 = Madowu::HtmlGenerator.new("test/subdir/empty.md")
     options = {:css => "test/test.css"}
@@ -43,7 +60,7 @@ class TC_HtmlGenerator < Test::Unit::TestCase
     correct << "<HTML lang=\'ja\'>"
     correct << "<head>"
     correct << "  <title></title>"
-    correct << "  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>"
+    correct << "  <meta http-equiv='Content-Type' content='text/html; charset=us-ascii'>"
     correct << "  <link rel='stylesheet' type='text/css' href='../test.css' media='all'>"
     correct << "</head>"
     correct << "<body>"

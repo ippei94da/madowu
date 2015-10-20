@@ -1,7 +1,12 @@
 = THIS_GEM changelog
 
-== Master (for 0.0.1)
+== Master (for 0.0.3)
+
+== Version 0.0.2 [2015-10-20]
+* Add -C (--charset) option and default encoding is set to be 'us-ascii'
+
+== Version 0.0.1 [2015-10-20]
 * Add ' ' into title in dirmap.
 
-== Version 0.0.0
-First release. [2015-10-20]
+== Version 0.0.0 [2015-10-20]
+First release.

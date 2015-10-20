@@ -18,6 +18,7 @@ op.banner = [
   "      You can see help with '#{File.basename("#{__FILE__}")} --help'.",
 ].join("\n")
 op.on("-c css_file", "--css=file", "Indicate css file"){|v| OPTIONS[:css] = v}
+op.on("-C charset", "--charset=str", "Indicate charset like 'UTF-8'"){|v| OPTIONS[:charset] = v}
 op.on("-o"    , "--outline"    , "Embed outline"){    OPTIONS[:outline] = true}
 op.on("-d"    , "--dirmap-side", "Embed sideber of directory map"){OPTIONS[:dirmap] = true}
 op.on("-s file"    , "--side", "Read file for sidebar"){|v|OPTIONS[:sidebar] = v}

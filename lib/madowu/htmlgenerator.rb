@@ -38,7 +38,7 @@ class Madowu::HtmlGenerator
     end
 
     result = [
-      make_header(options[:css]),
+      make_header(options[:css], options[:charset]),
       @markup_lines,
       "</div></div></body></html>",
       ''
@@ -77,16 +77,18 @@ class Madowu::HtmlGenerator
     @markup_lines = outlines + new_lines
   end
 
-  def make_header(css)
+  def make_header(css, charset)
     #title = `grep -E '^#' #{@md_file} | head -n 1`.sub(/^#\s*/, '').strip
     title = self.class.get_title(@md_file)
+
+    charset ||= 'us-ascii'
 
     results = []
     results << "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>"
     results << "<HTML lang=\'ja\'>"
     results << "<head>"
     results << "  <title>#{title}</title>"
-    results << "  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>"
+    results << "  <meta http-equiv='Content-Type' content='text/html; charset=#{charset}'>"
 
     if css
       if File.exist? css
