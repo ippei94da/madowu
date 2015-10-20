@@ -57,7 +57,7 @@ class Madowu::DirectoryMapper
       link_path = link_path.to_s.sub(/^#{md_dir}\//, '')
       anchor = anchor.to_s.sub(/^#{md_dir}\//, '')
       line = "  <li> <a href='#{link_path}'>#{anchor}</a>"
-      line += "(#{title})" unless title.to_s.empty?
+      line += " (#{title})" unless title.to_s.empty?
       results << line
     end
     results << "</ul>"

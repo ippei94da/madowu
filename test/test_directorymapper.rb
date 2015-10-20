@@ -19,9 +19,9 @@ class TC_Klass < Test::Unit::TestCase
     correct << "</ul>"
     correct << "<p>Current directory:</p>"
     correct << "<ul>"
-    correct << "  <li> <a href='dir/index.html'>dir/</a>(dir_index_md)"
-    correct << "  <li> <a href='foo.html'>foo.html</a>(foo_md)"
-    correct << "  <li> <a href='index.html'>index.html</a>(title_index.html)"
+    correct << "  <li> <a href='dir/index.html'>dir/</a> (dir_index_md)"
+    correct << "  <li> <a href='foo.html'>foo.html</a> (foo_md)"
+    correct << "  <li> <a href='index.html'>index.html</a> (title_index.html)"
     correct << "</ul>"
     assert_equal(correct, Madowu::DirectoryMapper.dirmap("test/directorymapper/dir2"))
 
