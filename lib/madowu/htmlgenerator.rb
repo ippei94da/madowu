@@ -25,7 +25,7 @@ class Madowu::HtmlGenerator
 
   # 'title' element in head is set as first /^#/ in md_file.
   def generate(options = {})
-    embed_outline if options[:outline]
+    embed_outline(options[:selflink]) if options[:outline]
 
     if options[:dirmap]
       md_dir = Pathname.new(@md_file).dirname.expand_path
@@ -53,7 +53,7 @@ class Madowu::HtmlGenerator
     @markup_lines += lines
   end
 
-  def embed_outline
+  def embed_outline(option_selflink = false)
     new_lines = []
     outlines = []
     outlines << "<div class='header'>"
@@ -65,7 +65,10 @@ class Madowu::HtmlGenerator
       #pp line
       new_line = line
       if /^\<h(\d)\>(.*)\<\/h(\d)\>$/ =~ line
-        new_line = "<h#{$1}><a name='#{counter.to_s}'>#{$2}</a></h#{$3}>"
+        new_line = ''
+        new_line += "<h#{$1}><a name='#{counter.to_s}'"
+        new_line += " href='\##{counter.to_s}'" if option_selflink
+        new_line += ">#{$2}</a></h#{$3}>"
         outlines << "  <li><a href='\##{counter}'>#{' + ' * ($1.to_i-1)}#{$2}</a></ll>"
         counter += 1
       end

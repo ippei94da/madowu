@@ -52,7 +52,6 @@ class TC_HtmlGenerator < Test::Unit::TestCase
     correct = correct.join("\n")
     assert_equal( correct, @h00.generate({:charset => "UTF-8"}))
 
-
     h04 = Madowu::HtmlGenerator.new("test/subdir/empty.md")
     options = {:css => "test/test.css"}
     correct = []
@@ -109,13 +108,19 @@ class TC_HtmlGenerator < Test::Unit::TestCase
     correct << "<h6><a name='5'>head6</a></h6>"
     correct << ""
     correct << "<p>line6</p>"
-    
     @h01.embed_outline
-    #puts correct
-    #puts "-"*60
-    #puts @h01.markup_lines
-    #exit
     assert_equal( correct, @h01.markup_lines)
+
+    correct = []
+    correct << "<div class='header'>"
+    correct << "<p>Outline:</p>"
+    correct << "<ul class='outline'>"
+    correct << "  <li><a href='#0'>head1</a></ll>"
+    correct << "</ul>"
+    correct << "</div>"
+    correct << "<h1><a name='0' href='#0'>head1</a></h1>"
+    @h02.embed_outline(true)
+    assert_equal( correct, @h02.markup_lines)
   end
 
   def test_embed_sidebar

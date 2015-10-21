@@ -1,6 +1,7 @@
 = THIS_GEM changelog
 
 == Master (for 0.0.3)
+* Add -O (--outline-selflink) option.
 
 == Version 0.0.2 [2015-10-20]
 * Add -C (--charset) option and default encoding is set to be 'us-ascii'
