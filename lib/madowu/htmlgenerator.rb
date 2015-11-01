@@ -88,7 +88,7 @@ class Madowu::HtmlGenerator
 
     results = []
     results << "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>"
-    results << "<HTML lang=\'ja\'>"
+    results << "<html lang=\'ja\'>"
     results << "<head>"
     results << "  <title>#{title}</title>"
     results << "  <meta http-equiv='Content-Type' content='text/html; charset=#{charset}'>"

@@ -21,7 +21,7 @@ class TC_HtmlGenerator < Test::Unit::TestCase
   def test_generate
     correct = []
     correct << "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>"
-    correct << "<HTML lang=\'ja\'>"
+    correct << "<html lang=\'ja\'>"
     correct << "<head>"
     correct << "  <title></title>"
     correct << "  <meta http-equiv='Content-Type' content='text/html; charset=us-ascii'>"
@@ -38,7 +38,7 @@ class TC_HtmlGenerator < Test::Unit::TestCase
     # charset
     correct = []
     correct << "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>"
-    correct << "<HTML lang=\'ja\'>"
+    correct << "<html lang=\'ja\'>"
     correct << "<head>"
     correct << "  <title></title>"
     correct << "  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>"
@@ -56,7 +56,7 @@ class TC_HtmlGenerator < Test::Unit::TestCase
     options = {:css => "test/test.css"}
     correct = []
     correct << "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>"
-    correct << "<HTML lang=\'ja\'>"
+    correct << "<html lang=\'ja\'>"
     correct << "<head>"
     correct << "  <title></title>"
     correct << "  <meta http-equiv='Content-Type' content='text/html; charset=us-ascii'>"
