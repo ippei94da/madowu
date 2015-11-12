@@ -56,6 +56,7 @@ span.adminmenu {
         white-space: nowrap;
 }
 
+/*
 h1 {
   height: 64px;
   line-height: 64px;
@@ -67,13 +68,20 @@ h1 {
 h2 {
   font-size: 160%;
 }
+*/
 
 div.body {
   margin-left: 1.8em;
   line-height: 120%;
+  font-size: 100%;
+}
+
+div.body h1 {
+  font-size: 160%;
 }
 
 div.body h2 {
+  font-size: 150%;
   margin-top: 1.5em;
   margin-bottom: 0.5em;
   padding: 0.4em 0.4em 0.4em 0.4em;
@@ -83,6 +91,7 @@ div.body h2 {
 }
 
 div.body h3 {
+  font-size: 140%;
   margin-top: 1.5em;
   margin-bottom: 0.5em;
   padding: 0.4em 0.4em 0.4em 0.4em;
@@ -92,14 +101,14 @@ div.body h3 {
 }
 
 div.body h4 {
-  font-size: 140%;
+  font-size: 130%;
   padding: 0.4em 0.4em 0.4em 0.4em;
   border-top: solid  2px #48c;
   border-left: solid  2px #48c;
   border-right: solid  2px #48c;
 }
 div.body h5 {
-  font-size: 140%;
+  font-size: 120%;
   padding: 0.4em 0.4em 0.4em 0.4em;
   border-top: solid  1px #48c;
   border-left: solid  1px #48c;
