@@ -29,19 +29,15 @@ desc "Make .sidebar"
 #task :dirmaps => dirmaps
 
 desc "Make *.html from *.md"
-md_files = FileList["**/*.md"]
+#md_files = FileList["**/*.md"]
+md_files = FileList["*.md"]
 html_files = md_files.ext("html")
 task :md2html => FileList[html_files]
 html_files.each do |html_file|
   md_file = html_file.ext("md")
   md_path = Pathname.new( md_file)
   dirpath = md_path.dirname
-  #dirmap = md_path.dirname + DIRMAP_HTML
-  #file html_file => [md_file, dirmap] do
-  #file html_file => [md_file, dirpath, dirpath.parent] do
   file html_file => [md_file] do
-    #sh "madowu -o -s #{dirmap} -c madowu.css #{md_file}"
-    #sh "madowu -o -d -c madowu.css -C UTF-8 #{md_file}"
     sh "madowu -O -d -c madowu.css -C UTF-8 #{md_file}"
   end
 end
@@ -63,6 +59,22 @@ pdf_files.each do |pdf_file|
   end
 end
 
+# recursive だと、サブディレクトリの Rakefile も
+# recursive ターゲットを持っているという前提が必要。
+desc "Execute 'rake' in all subdirs with Rakefile"
+rakefiles = FileList["**/Rakefile"]
+dirs = rakefiles.map{|path| Pathname.new(path).dirname.to_s}
+dirs.delete_if {|i| i == '.' } 
+dirs.map!{|path| File.absolute_path(path)}
+task :subdir do
+  dirs.each do |dir|
+    Dir.chdir dir
+    system "rake"
+  end
+end
+
+task :all => [:md2html, :subdir]
+
 
 task :pdf => :html2pdf
 task :default => :tree
@@ -71,6 +83,5 @@ require "rake/clean"
 CLEAN.include( [
   html_files,
   pdf_files,
-  #dirmaps,
 ])
 
