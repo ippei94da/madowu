@@ -1,0 +1,72 @@
+#! /usr/bin/env ruby
+# coding: utf-8
+#
+# TODO
+#   完結した tex としてコンパイル 
+#   document 環境としてコンパイル 
+#   equation 環境としてコンパイル 
+#   eqnarray 環境としてコンパイル。開始式番号指定 
+
+
+DEFAULT_DENSITY = 150
+
+USAGE = <<HERE
+  Usage: #{File.basename("#{__FILE__}")} tex_file
+
+  Default:
+    - Output png image.
+    - Density for conversion is #{DEFAULT_DENSITY}.
+HERE
+
+LATEX    = 'latexmk'
+CONVERT = 'convert'
+
+require "optparse"
+require "pp"
+require "pathname"
+require "fileutils"
+
+## option analysis
+options = {}
+op = OptionParser.new
+op.banner = USAGE
+op.on("-j"    , "--jpg"    , "Output jpg image, alternative to png."){ options[:img] = :jpg}
+op.on("-d val", "--density=val", "Set density for raster conversion"){|v| options[:density] = v}
+op.parse!(ARGV)
+
+options[:img] ||= :png
+img_ext = options[:img].to_s
+
+density = DEFAULT_DENSITY
+density = options[:density].to_i if options[:density]
+
+def execute(commands)
+  commands.each do |c|
+    puts c
+    system c
+  end
+end
+
+if ARGV.empty?
+  puts "Need one tex file in argument. Exit."
+  puts USAGE
+  exit
+end
+
+tex_file = ARGV[0]
+dvi_file = Pathname(tex_file).sub_ext(".dvi").to_s
+img_file = Pathname(tex_file).sub_ext(".#{img_ext}").to_s
+
+
+commands = []
+commands << "#{LATEX} #{tex_file} > /dev/null"
+commands << "#{CONVERT} -trim -density #{density}x#{density} #{dvi_file} #{img_file}"
+execute(commands)
+commands = []
+
+trash_exts = [ 'aux', 'dvi', 'fdb_latexmk', 'fls', 'log']
+trash_exts.each do |ext|
+  file = Pathname(tex_file).sub_ext(".#{ext}").to_s
+  FileUtils.rm file if File.exist? file
+end
+
