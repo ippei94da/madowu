@@ -7,7 +7,10 @@
 * Add bin/tex2image
 * in example/Rakefile.
     * Add subdir target
-    * Modify target from **/*.md to *.md in default target.
+    * Modify target from **/*.md to *.md in default target
+    * Add 'tex2image' target
+
+    * 'default' target includes 'tex2image' target
 
 == Version 0.0.2 [2015-10-20]
 * Add -C (--charset) option and default encoding is set to be 'us-ascii'

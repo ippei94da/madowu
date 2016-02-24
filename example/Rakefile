@@ -4,7 +4,9 @@
 #DIRMAP_HTML = '.dirmap.html'
 ENCODING = "UTF-8"
 HTML2PDF = "wkhtmltopdf"
+TEX2IMAGE = "tex2image"
 HTML2PDF_OPTIONS = "-B 1cm -L 1.5cm -R 1.5cm -T 1.5cm -s A4 --encoding #{ENCODING} "
+CONVERT_COMMAND = "convert -alpha deactivate -density 150x150"
 
 require "pp"
 require "fileutils"
@@ -59,6 +61,33 @@ pdf_files.each do |pdf_file|
   end
 end
 
+
+desc "Make .png from .eps."
+eps_files = FileList["*.eps"]
+png_files = eps_files.ext("png")
+task :eps2png => FileList[png_files]
+png_files.each do |png_file|
+    eps_file = png_file.ext("eps")
+    t = [eps_file]
+    file png_file => t do
+        sh "#{CONVERT_COMMAND} #{eps_file} #{png_file}"
+    end
+end
+
+
+desc "Make *.png from *.tex"
+tex_files = FileList["*.tex"]
+png_files = tex_files.ext("png")
+task :tex2png => FileList[png_files]
+png_files.each do |png_file|
+  tex_file = png_file.ext("tex")
+  file png_file => tex_file do
+    #pp png_file, tex_file; exit
+    sh "#{TEX2IMAGE} #{tex_file}"
+  end
+end
+
+
 # recursive だと、サブディレクトリの Rakefile も
 # recursive ターゲットを持っているという前提が必要。
 desc "Execute 'rake' in all subdirs with Rakefile"
@@ -77,7 +106,7 @@ task :all => [:md2html, :subdir]
 
 
 task :pdf => :html2pdf
-task :default => :tree
+task :default => [:tree, :tex2png, :eps2png]
 
 require "rake/clean"
 CLEAN.include( [
