@@ -12,6 +12,12 @@
 
     * 'default' target includes 'tex2image' target
 
+
+* 'dirmap' command outputs Markdown format.
+* '--side-map' option is removed from 'madowu' command.
+* 'madowu --side=file' deal with Markdown format file instead of HTML.
+
+
 == Version 0.0.2 [2015-10-20]
 * Add -C (--charset) option and default encoding is set to be 'us-ascii'
 

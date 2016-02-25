@@ -1,6 +1,8 @@
 #! /usr/bin/env ruby
 # coding: utf-8
 
+DEFAULT_OUTFILE = '.dirmap.md'
+
 require "optparse"
 require "pathname"
 require "pp"
@@ -17,6 +19,8 @@ op.banner = [
 #op.on("-b val", "--bak=val", "descriptionB"){|v| OPTIONS[:bak] = v}
 #op.parse!(ARGV)
 
+outfile = DEFAULT_OUTFILE
+
 unless ARGV.size == 1
   puts op.banner
   exit
@@ -27,4 +31,15 @@ unless FileTest.directory? ARGV[0]
   exit
 end
 
-puts Madowu::DirectoryMapper.dirmap(ARGV[0])
+contents = Madowu::DirectoryMapper.dirmap(ARGV[0])
+if FileTest.exist? outfile
+  old_contents = File.open(outfile, "r").readlines.map{|i| i.chomp}
+  if old_contents == contents
+    #puts "not update"
+    exit
+  end
+end
+
+io = File.open(outfile, 'w')
+io.puts contents
+#puts "update #{outfile}"

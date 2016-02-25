@@ -24,8 +24,8 @@ op.on("-O"    , "--outline-selflink", "Embed outline with link to the line"){
   OPTIONS[:outline] = true
   OPTIONS[:selflink] = true
 }
-op.on("-d"    , "--dirmap-side", "Embed sideber of directory map"){OPTIONS[:dirmap] = true}
-op.on("-s file"    , "--side", "Read file for sidebar"){|v|OPTIONS[:sidebar] = v}
+#op.on("-d"    , "--dirmap-side", "Embed sideber of directory map"){OPTIONS[:dirmap] = true}
+op.on("-s file"    , "--side=md_file", "Read Markdown file for sidebar"){|v|OPTIONS[:sidebar] = v}
 op.on("-m markdown"    , "--markdown=command", "Indicate Markdown command"){|v| OPTIONS[:markdown] = v}
 op.parse!(ARGV)
 

@@ -12,23 +12,32 @@ class TC_Klass < Test::Unit::TestCase
   #end
 
   def test_map
+    #correct = []
+    #correct << "<p>Parent directory:</p>"
+    #correct << "<ul>"
+    #correct << "  <li> <a href='../'>../</a>"
+    #correct << "</ul>"
+    #correct << "<p>Current directory:</p>"
+    #correct << "<ul>"
+    #correct << "  <li> <a href='dir/index.html'>dir/</a> (dir_index_md)"
+    #correct << "  <li> <a href='foo.html'>foo.html</a> (foo_md)"
+    #correct << "  <li> <a href='index.html'>index.html</a> (title_index.html)"
+    #correct << "</ul>"
+    #assert_equal(correct, Madowu::DirectoryMapper.dirmap("test/directorymapper/dir2"))
+
+    ##pp Madowu::DirectoryMapper.dirmap("/home/ippei/doc/bookmark/")
+
     correct = []
-    correct << "<p>Parent directory:</p>"
-    correct << "<ul>"
-    correct << "  <li> <a href='../'>../</a>"
-    correct << "</ul>"
-    correct << "<p>Current directory:</p>"
-    correct << "<ul>"
-    correct << "  <li> <a href='dir/index.html'>dir/</a> (dir_index_md)"
-    correct << "  <li> <a href='foo.html'>foo.html</a> (foo_md)"
-    correct << "  <li> <a href='index.html'>index.html</a> (title_index.html)"
-    correct << "</ul>"
+    correct << "Parent directory:"
+    correct << ""
+    correct << "* [../](../)"
+    correct << ""
+    correct << "Current directory:"
+    correct << ""
+    correct << "* [dir/](dir/index.html) (dir_index_md)"
+    correct << "* [foo.html](foo.html) (foo_md)"
+    correct << "* [index.html](index.html) (title_index.html)"
     assert_equal(correct, Madowu::DirectoryMapper.dirmap("test/directorymapper/dir2"))
-
-    #pp Madowu::DirectoryMapper.dirmap("/home/ippei/doc/bookmark/")
-
-
-
   end
 
   def test_get_title

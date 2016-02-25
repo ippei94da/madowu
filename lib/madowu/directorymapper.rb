@@ -12,17 +12,17 @@ class Madowu::DirectoryMapper
     results = []
     md_dir = Pathname.new(dir)
 
-    results << "<p>Parent directory:</p>"
-    results << "<ul>"
+    results << "Parent directory:"
+    results << ""
     if File.exist?(md_dir.parent + 'index.html')
-      results << "  <li> <a href='../index.html'>../</a>"
+      results << "* [../](../index.html)"
     else
-      results << "  <li> <a href='../'>../</a>"
+      results << "* [../](../)"
     end
-    results << "</ul>"
+    results << ""
 
-    results << "<p>Current directory:</p>"
-    results << "<ul>"
+    results << "Current directory:"
+    results << ""
     current_entries = []
     cur_dir_entries = Dir.entries(md_dir).sort.delete_if{|i| i =~ /^\./}
     cur_dir_entries.each do |i|
@@ -56,11 +56,11 @@ class Madowu::DirectoryMapper
       end
       link_path = link_path.to_s.sub(/^#{md_dir}\//, '')
       anchor = anchor.to_s.sub(/^#{md_dir}\//, '')
-      line = "  <li> <a href='#{link_path}'>#{anchor}</a>"
+      line = "* [#{anchor}](#{link_path})"
       line += " (#{title})" unless title.to_s.empty?
       results << line
     end
-    results << "</ul>"
+    #results << "</ul>"
     results
   end
 
