@@ -1,6 +1,7 @@
 = madowu
 
-Description goes here.
+Markdown to HTML with table of contents, sidebar to neighboring directories.
+See http://www.q-eng.imat.eng.osaka-cu.ac.jp/~ippei/html/madowu.html
 
 == Contributing to madowu
  
