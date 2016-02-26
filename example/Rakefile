@@ -1,7 +1,7 @@
 # coding: utf-8
 # Rakefile for Markdown documents.
 
-DIRMAP_HTML = '.dirmap.html'
+DIRMAP_MD = '.dirmap.md'
 ENCODING = "UTF-8"
 HTML2PDF = "wkhtmltopdf"
 TEX2IMAGE = "tex2image"
@@ -12,34 +12,41 @@ require "pp"
 require "fileutils"
 require "pathname"
 
-desc "Update .dirmap.md if directory changed."
-task DIRMAP_HTML do
+## .dirmap.md
+desc "update .dirmap.md if directory changed."
+task DIRMAP_MD do
   sh "dirmap ."
 end
 
-desc "Make *.html from *.md"
-#md_files = FileList["**/*.md"]
+## *.html
 md_files = FileList["*.md"]
 html_files = md_files.ext("html")
-task :md2html => [FileList[html_files], DIRMAP_HTML]
+html_tasks = []
 html_files.each do |html_file|
   md_file = html_file.ext("md")
   md_path = Pathname.new( md_file)
   dirpath = md_path.dirname
-  file html_file => [md_file] do
-    sh "madowu -O -d -c madowu.css -C UTF-8 #{md_file}"
+  file html_file => [md_file, DIRMAP_MD] do
+    #pp html_file, md_file, DIRMAP_MD
+    #puts
+    sh "madowu -O -s .dirmap.md -c madowu.css -C UTF-8 #{md_file}"
   end
-  #pp html_file
+  html_tasks << html_file
 end
 
-#desc "Update mtime of all html files"
+desc "make *.html from *.md"
+task :md2html => [DIRMAP_MD, * html_tasks]
+#pp html_tasks
+
+
+#desc "update mtime of all html files"
 #task :tree => :md2html do
 #  html_files.each do |html_file|
 #    File.utime(Time.now, Time.now, html_file)
 #  end
 #end
 
-desc "Make *.pdf from *.html"
+desc "make *.pdf from *.html"
 pdf_files = html_files.ext("pdf")
 task :html2pdf => FileList[pdf_files]
 pdf_files.each do |pdf_file|
@@ -50,7 +57,7 @@ pdf_files.each do |pdf_file|
 end
 
 
-desc "Make .png from .eps."
+desc "make .png from .eps."
 eps_files = FileList["*.eps"]
 png_files = eps_files.ext("png")
 task :eps2png => FileList[png_files]
@@ -63,7 +70,7 @@ png_files.each do |png_file|
 end
 
 
-desc "Make *.png from *.tex"
+desc "make *.png from *.tex"
 tex_files = FileList["*.tex"]
 png_files = tex_files.ext("png")
 task :tex2png => FileList[png_files]
@@ -78,7 +85,7 @@ end
 
 # recursive だと、サブディレクトリの Rakefile も
 # recursive ターゲットを持っているという前提が必要。
-desc "Execute 'rake' in all subdirs with Rakefile"
+desc "execute 'rake' in all subdirs with Rakefile"
 rakefiles = FileList["**/Rakefile"]
 dirs = rakefiles.map{|path| Pathname.new(path).dirname.to_s}
 dirs.delete_if {|i| i == '.' } 
