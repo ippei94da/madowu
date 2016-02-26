@@ -26,25 +26,21 @@ html_files.each do |html_file|
   md_file = html_file.ext("md")
   md_path = Pathname.new( md_file)
   dirpath = md_path.dirname
+  src = FileList[md_file, DIRMAP_MD]
   file html_file => [md_file, DIRMAP_MD] do
-    #pp html_file, md_file, DIRMAP_MD
+  #file html_file => src do
     #puts
+    #pp html_file, md_file, DIRMAP_MD
     sh "madowu -O -s .dirmap.md -c madowu.css -C UTF-8 #{md_file}"
   end
   html_tasks << html_file
 end
-
-desc "make *.html from *.md"
-task :md2html => [DIRMAP_MD, * html_tasks]
 #pp html_tasks
 
 
-#desc "update mtime of all html files"
-#task :tree => :md2html do
-#  html_files.each do |html_file|
-#    File.utime(Time.now, Time.now, html_file)
-#  end
-#end
+desc "make *.html from *.md"
+task :md2html => [DIRMAP_MD, * html_tasks]
+
 
 desc "make *.pdf from *.html"
 pdf_files = html_files.ext("pdf")
