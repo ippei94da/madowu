@@ -73,54 +73,114 @@ class TC_HtmlGenerator < Test::Unit::TestCase
   end
 
   def test_embed_outline
-    correct = []
-    correct << "<div class='header'>"
-    correct << "<p>Outline:</p>"
-    correct << "<ul class='outline'>"
-    correct << "  <li><a href='#0'>head1</a></ll>"
-    correct << "  <li><a href='#1'> + head2</a></ll>"
-    correct << "  <li><a href='#2'> +  + head3</a></ll>"
-    correct << "  <li><a href='#3'> +  +  + head4</a></ll>"
-    correct << "  <li><a href='#4'> +  +  +  + head5</a></ll>"
-    correct << "  <li><a href='#5'> +  +  +  +  + head6</a></ll>"
-    correct << "</ul>"
-    correct << "</div>"
-    correct << "<h1><a name='0'>head1</a></h1>"
-    correct << ""
-    correct << "<p>line1</p>"
-    correct << ""
-    correct << "<h2><a name='1'>head2</a></h2>"
-    correct << ""
-    correct << "<p>line2</p>"
-    correct << ""
-    correct << "<h3><a name='2'>head3</a></h3>"
-    correct << ""
-    correct << "<p>line3</p>"
-    correct << ""
-    correct << "<h4><a name='3'>head4</a></h4>"
-    correct << ""
-    correct << "<p>line4</p>"
-    correct << ""
-    correct << "<h5><a name='4'>head5</a></h5>"
-    correct << ""
-    correct << "<p>line5</p>"
-    correct << ""
-    correct << "<h6><a name='5'>head6</a></h6>"
-    correct << ""
-    correct << "<p>line6</p>"
+    correct = [
+      "<div class='header'>",
+      "<p>Outline:</p>",
+      "<ul>",
+      "<li><a href=\"#0\">head1</a>",
+      "<ul>",
+      "<li><a href=\"#1\">head2</a>",
+      "<ul>",
+      "<li><a href=\"#2\">head3</a>",
+      "<ul>",
+      "<li><a href=\"#3\">head4</a>",
+      "<ul>",
+      "<li><a href=\"#4\">head5</a>",
+      "<ul>",
+      "<li><a href=\"#5\">head6</a></li>",
+      "</ul></li>",
+      "</ul></li>",
+      "</ul></li>",
+      "</ul></li>",
+      "</ul></li>",
+      "</ul>",
+      "</div>",
+      "<h1><a name='0'>head1</a></h1>",
+      "",
+      "<p>line1</p>",
+      "",
+      "<h2><a name='1'>head2</a></h2>",
+      "",
+      "<p>line2</p>",
+      "",
+      "<h3><a name='2'>head3</a></h3>",
+      "",
+      "<p>line3</p>",
+      "",
+      "<h4><a name='3'>head4</a></h4>",
+      "",
+      "<p>line4</p>",
+      "",
+      "<h5><a name='4'>head5</a></h5>",
+      "",
+      "<p>line5</p>",
+      "",
+      "<h6><a name='5'>head6</a></h6>",
+      "",
+      "<p>line6</p>"
+    ]
     @h01.embed_outline
     assert_equal( correct, @h01.markup_lines)
 
     correct = []
     correct << "<div class='header'>"
     correct << "<p>Outline:</p>"
-    correct << "<ul class='outline'>"
-    correct << "  <li><a href='#0'>head1</a></ll>"
+    correct << "<ul>"
+    correct << '<li><a href="#0">head1</a></li>'
     correct << "</ul>"
     correct << "</div>"
     correct << "<h1><a name='0' href='#0'>head1</a></h1>"
     @h02.embed_outline(true)
     assert_equal( correct, @h02.markup_lines)
+
+    #correct = []
+    #correct << "<div class='header'>"
+    #correct << "<p>Outline:</p>"
+    #correct << "<ul class='outline'>"
+    #correct << "  <li><a href='#0'>head1</a></ll>"
+    #correct << "  <li><a href='#1'> + head2</a></ll>"
+    #correct << "  <li><a href='#2'> +  + head3</a></ll>"
+    #correct << "  <li><a href='#3'> +  +  + head4</a></ll>"
+    #correct << "  <li><a href='#4'> +  +  +  + head5</a></ll>"
+    #correct << "  <li><a href='#5'> +  +  +  +  + head6</a></ll>"
+    #correct << "</ul>"
+    #correct << "</div>"
+    #correct << "<h1><a name='0'>head1</a></h1>"
+    #correct << ""
+    #correct << "<p>line1</p>"
+    #correct << ""
+    #correct << "<h2><a name='1'>head2</a></h2>"
+    #correct << ""
+    #correct << "<p>line2</p>"
+    #correct << ""
+    #correct << "<h3><a name='2'>head3</a></h3>"
+    #correct << ""
+    #correct << "<p>line3</p>"
+    #correct << ""
+    #correct << "<h4><a name='3'>head4</a></h4>"
+    #correct << ""
+    #correct << "<p>line4</p>"
+    #correct << ""
+    #correct << "<h5><a name='4'>head5</a></h5>"
+    #correct << ""
+    #correct << "<p>line5</p>"
+    #correct << ""
+    #correct << "<h6><a name='5'>head6</a></h6>"
+    #correct << ""
+    #correct << "<p>line6</p>"
+    #@h01.embed_outline
+    #assert_equal( correct, @h01.markup_lines)
+
+    #correct = []
+    #correct << "<div class='header'>"
+    #correct << "<p>Outline:</p>"
+    #correct << "<ul class='outline'>"
+    #correct << "  <li><a href='#0'>head1</a></ll>"
+    #correct << "</ul>"
+    #correct << "</div>"
+    #correct << "<h1><a name='0' href='#0'>head1</a></h1>"
+    #@h02.embed_outline(true)
+    #assert_equal( correct, @h02.markup_lines)
   end
 
   def test_embed_sidebar

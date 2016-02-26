@@ -1,22 +1,25 @@
 = THIS_GEM changelog
 
-== Master (for 0.0.3)
-* Add -O (--outline-selflink) option.
-* Modify example/Rakefile not depend of *.html on directories.
-* <HTML> header to <html> in HtmlGenerator.generate 
-* Add bin/tex2image
-* in example/Rakefile.
-    * Add subdir target
-    * Modify target from **/*.md to *.md in default target
-    * Add 'tex2image' target
+== Master (for 0.0.4)
 
-    * 'default' target includes 'tex2image' target
-
-
-* 'dirmap' command outputs Markdown format.
-* '--side-map' option is removed from 'madowu' command.
-* 'madowu --side=file' deal with Markdown format file instead of HTML.
-
+== Version 0.0.3 [2016-02-26]
+* bin/
+    * modify 'madowu' command
+        * add -O (--outline-selflink) option.
+        * remove '--side-map' option.
+        * modify '--side=file' to deal with Markdown format file instead of HTML.
+        * modify '--outline' to outputs layering itemization.
+    * add 'tex2image' command
+    * modify 'bin/dirmap' command to outputs Markdown format.
+* 'example/Rakefile'
+    * add 'subdir' target
+    * modify target from **/*.md to *.md in default target
+    * add 'tex2image' target
+    * modify 'default' target to include 'tex2image' target
+    * modify 'md2html' target to detect file existence change.
+    * modify html files to depend on .dirmap.md updated.
+* doc/ is included( in Japanese).
+* lib/htmlgenerator.rb, <HTML> header to <html> in HtmlGenerator.generate 
 
 == Version 0.0.2 [2015-10-20]
 * Add -C (--charset) option and default encoding is set to be 'us-ascii'

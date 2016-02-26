@@ -57,28 +57,58 @@ class Madowu::HtmlGenerator
   def embed_outline(option_selflink = false)
     new_lines = []
     outlines = []
-    outlines << "<div class='header'>"
-    outlines << "<p>Outline:</p>"
-    outlines << "<ul class='outline'>"
-    counter = 0
-
+    anchor_index = 0
     @markup_lines.each do |line|
       #pp line
       new_line = line
       if /^\<h(\d)\>(.*)\<\/h(\d)\>$/ =~ line
         new_line = ''
-        new_line += "<h#{$1}><a name='#{counter.to_s}'"
-        new_line += " href='\##{counter.to_s}'" if option_selflink
+        new_line += "<h#{$1}><a name='#{anchor_index.to_s}'"
+        new_line += " href='\##{anchor_index.to_s}'" if option_selflink
         new_line += ">#{$2}</a></h#{$3}>"
-        outlines << "  <li><a href='\##{counter}'>#{' + ' * ($1.to_i-1)}#{$2}</a></ll>"
-        counter += 1
+
+        #outlines << "  <li><a href='\##{anchor_index}'>#{' + ' * ($1.to_i-1)}#{$2}</a></ll>"
+        #pp "#{' ' * (($1.to_i) -1) * 4}* [#{$2}](\##{anchor_index})"
+        outlines << "#{' ' * (($1.to_i) -1) * 4}* [#{$2}](\##{anchor_index})"
+        anchor_index += 1
       end
       new_lines << new_line
     end
-    outlines << "</ul>"
-    outlines << "</div>"
+
+    io = IO.popen(@markdown, "r+")
+    io.write outlines.join("\n")
+    io.close_write
+    outlines = io.readlines.map {|i| i.chomp}
+
+    outlines.unshift( "<div class='header'>", "<p>Outline:</p>")
+    outlines.push "</div>"
 
     @markup_lines = outlines + new_lines
+
+    #new_lines = []
+    #outlines = []
+    #outlines << "<div class='header'>"
+    #outlines << "<p>Outline:</p>"
+    #outlines << "<ul class='outline'>"
+    #counter = 0
+
+    #@markup_lines.each do |line|
+    #  #pp line
+    #  new_line = line
+    #  if /^\<h(\d)\>(.*)\<\/h(\d)\>$/ =~ line
+    #    new_line = ''
+    #    new_line += "<h#{$1}><a name='#{counter.to_s}'"
+    #    new_line += " href='\##{counter.to_s}'" if option_selflink
+    #    new_line += ">#{$2}</a></h#{$3}>"
+    #    outlines << "  <li><a href='\##{counter}'>#{' + ' * ($1.to_i-1)}#{$2}</a></ll>"
+    #    counter += 1
+    #  end
+    #  new_lines << new_line
+    #end
+    #outlines << "</ul>"
+    #outlines << "</div>"
+
+    #@markup_lines = outlines + new_lines
   end
 
   def make_header(css, charset)
