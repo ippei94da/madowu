@@ -4,10 +4,9 @@ require 'pp'
 require 'nokogiri'
 require "open-uri"
 
-url = $stdin.gets.chomp
-html = open(url)
-doc = Nokogiri::HTML.parse(html)
-
-# タイトルを表示
-puts "[#{doc.title}](#{url})"
-
+ARGF.each do |url|
+  url.chomp!
+  html = open(url)
+  doc = Nokogiri::HTML.parse(html)
+  puts "[#{doc.title}](#{url})"
+end
