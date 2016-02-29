@@ -1,0 +1,13 @@
+#! /usr/bin/env ruby
+
+require 'pp'
+require 'nokogiri'
+require "open-uri"
+
+url = $stdin.gets.chomp
+html = open(url)
+doc = Nokogiri::HTML.parse(html)
+
+# タイトルを表示
+puts "[#{doc.title}](#{url})"
+

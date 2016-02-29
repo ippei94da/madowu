@@ -1,6 +1,7 @@
 = THIS_GEM changelog
 
 == Master (for 0.0.4)
+* add bin/urltitle
 
 == Version 0.0.3 [2016-02-26]
 * bin/
