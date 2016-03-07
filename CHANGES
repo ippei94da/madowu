@@ -3,6 +3,8 @@
 == Master (for 0.0.4)
 * add bin/urltitle
 
+* isbn から amazon 情報を取る
+
 == Version 0.0.3 [2016-02-26]
 * bin/
     * modify 'madowu' command
