@@ -8,14 +8,6 @@ require "madowu"
 ARGF.each do |isbn|
   book = Madowu::Isbn.new(isbn)
 
-  #pp book.title
-  #pp book.author
-  #pp book.isbn
-  #pp book.publisher
-  #pp book.publication_date
-  #pp book.url
-  #pp book.img_url
-
   puts <<HERE
 [ ![#{book.title}](#{book.img_url})
   #{book.title},
