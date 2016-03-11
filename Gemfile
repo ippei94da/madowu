@@ -11,4 +11,5 @@ group :development do
   gem "bundler", "~> 1.11"
   gem "jeweler", "~> 2.0"
   gem "simplecov", "~> 0.11"
+  gem 'amazon-ecs', "~> 2.4"
 end
