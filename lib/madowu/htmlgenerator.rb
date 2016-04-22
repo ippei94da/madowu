@@ -61,17 +61,26 @@ class Madowu::HtmlGenerator
     @markup_lines.each do |line|
       #pp line
       new_line = line
-      if /^\<h(\d)\>(.*)\<\/h(\d)\>$/ =~ line
+      if /^\<h(\d)(.*?)\>(.*)\<\/h(\d)\>$/ =~ line
         new_line = ''
-        new_line += "<h#{$1}><a name='#{anchor_index.to_s}'"
+        new_line += "<h#{$1}"
+        new_line += "#{$2}" unless $2.empty?
+        new_line += "><a name='#{anchor_index.to_s}'"
         new_line += " href='\##{anchor_index.to_s}'" if option_selflink
-        new_line += ">#{$2}</a></h#{$3}>"
+        new_line += ">#{$3}</a></h#{$1}>"
 
-        #outlines << "  <li><a href='\##{anchor_index}'>#{' + ' * ($1.to_i-1)}#{$2}</a></ll>"
-        #pp "#{' ' * (($1.to_i) -1) * 4}* [#{$2}](\##{anchor_index})"
-        outlines << "#{' ' * (($1.to_i) -1) * 4}* [#{$2}](\##{anchor_index})"
+        outlines << "#{' ' * (($1.to_i) -1) * 4}* [#{$3}](\##{anchor_index})"
         anchor_index += 1
       end
+      #if /^\<h(\d)\>(.*)\<\/h(\d)\>$/ =~ line
+      #  new_line = ''
+      #  new_line += "<h#{$1}><a name='#{anchor_index.to_s}'"
+      #  new_line += " href='\##{anchor_index.to_s}'" if option_selflink
+      #  new_line += ">#{$2}</a></h#{$3}>"
+
+      #  outlines << "#{' ' * (($1.to_i) -1) * 4}* [#{$2}](\##{anchor_index})"
+      #  anchor_index += 1
+      #end
       new_lines << new_line
     end
 

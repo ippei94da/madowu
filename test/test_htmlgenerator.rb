@@ -133,54 +133,18 @@ class TC_HtmlGenerator < Test::Unit::TestCase
     @h02.embed_outline(true)
     assert_equal( correct, @h02.markup_lines)
 
-    #correct = []
-    #correct << "<div class='header'>"
-    #correct << "<p>Outline:</p>"
-    #correct << "<ul class='outline'>"
-    #correct << "  <li><a href='#0'>head1</a></ll>"
-    #correct << "  <li><a href='#1'> + head2</a></ll>"
-    #correct << "  <li><a href='#2'> +  + head3</a></ll>"
-    #correct << "  <li><a href='#3'> +  +  + head4</a></ll>"
-    #correct << "  <li><a href='#4'> +  +  +  + head5</a></ll>"
-    #correct << "  <li><a href='#5'> +  +  +  +  + head6</a></ll>"
-    #correct << "</ul>"
-    #correct << "</div>"
-    #correct << "<h1><a name='0'>head1</a></h1>"
-    #correct << ""
-    #correct << "<p>line1</p>"
-    #correct << ""
-    #correct << "<h2><a name='1'>head2</a></h2>"
-    #correct << ""
-    #correct << "<p>line2</p>"
-    #correct << ""
-    #correct << "<h3><a name='2'>head3</a></h3>"
-    #correct << ""
-    #correct << "<p>line3</p>"
-    #correct << ""
-    #correct << "<h4><a name='3'>head4</a></h4>"
-    #correct << ""
-    #correct << "<p>line4</p>"
-    #correct << ""
-    #correct << "<h5><a name='4'>head5</a></h5>"
-    #correct << ""
-    #correct << "<p>line5</p>"
-    #correct << ""
-    #correct << "<h6><a name='5'>head6</a></h6>"
-    #correct << ""
-    #correct << "<p>line6</p>"
-    #@h01.embed_outline
-    #assert_equal( correct, @h01.markup_lines)
+    h03 = Madowu::HtmlGenerator.new("test/head_pandoc.md")
+    correct = []
+    correct << "<div class='header'>"
+    correct << "<p>Outline:</p>"
+    correct << "<ul>"
+    correct << '<li><a href="#0">pandoc</a></li>'
+    correct << "</ul>"
+    correct << "</div>"
+    correct << "<h1 id=\"section\"><a name='0' href='#0'>pandoc</a></h1>"
+    h03.embed_outline(true)
+    assert_equal( correct, h03.markup_lines)
 
-    #correct = []
-    #correct << "<div class='header'>"
-    #correct << "<p>Outline:</p>"
-    #correct << "<ul class='outline'>"
-    #correct << "  <li><a href='#0'>head1</a></ll>"
-    #correct << "</ul>"
-    #correct << "</div>"
-    #correct << "<h1><a name='0' href='#0'>head1</a></h1>"
-    #@h02.embed_outline(true)
-    #assert_equal( correct, @h02.markup_lines)
   end
 
   def test_embed_sidebar
