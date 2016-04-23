@@ -1,11 +1,10 @@
 = THIS_GEM changelog
 
 == Master (for 0.0.4)
-* add bin/urltitle
-
-* outline を pandoc 形式に対応した
-
-* isbn から amazon 情報を取る
+* bin/urltitle was added
+* bin/isbninfo was added
+* 'madowu --outline' was adjusted to pandoc style md file
+* bin/dirmap changed to find only *.html, ignore else.
 
 == Version 0.0.3 [2016-02-26]
 * bin/

@@ -50,8 +50,9 @@ class Madowu::DirectoryMapper
           link_path = Pathname.new(path.sub_ext('.html'))
           title = self.get_title(path.to_s)
         else
-          link_path = path
-          title = nil
+          #link_path = path
+          #title = nil
+          next
         end
       end
       link_path = link_path.to_s.sub(/^#{md_dir}\//, '')
