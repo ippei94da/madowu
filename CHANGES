@@ -1,6 +1,7 @@
 = THIS_GEM changelog
 
 == Master (for 0.0.5)
+* Bugfix of 'madowu --outline' for pandoc.
 
 == Version 0.0.4 [2016-04-23]
 * bin/urltitle was added

@@ -46,6 +46,7 @@ end
 outfile = DEFAULT_OUTFILE
 contents = Madowu::DirectoryMapper.dirmap(dir)
 
+#pp contents
 if should_update?(options, outfile, contents)
   io = File.open(outfile, 'w')
   io.puts contents
