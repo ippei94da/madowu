@@ -1,3 +1,6 @@
+% head
+% author
+% Last-modified:2016/04/27 13:10:19.
 # head1
 line1
 

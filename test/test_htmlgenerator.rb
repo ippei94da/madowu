@@ -159,5 +159,20 @@ class TC_HtmlGenerator < Test::Unit::TestCase
     assert_equal(correct, @h02.markup_lines)
   end
 
+  def test_get_title
+    assert_equal('title foo'  , Madowu::HtmlGenerator.get_title("test/directorymapper/dir1/foo.md"))
+    assert_equal('dir index md', Madowu::HtmlGenerator.get_title("test/directorymapper/dir2/dir/index.md"))
+    assert_equal('foo md'  , Madowu::HtmlGenerator.get_title("test/directorymapper/dir2/foo.md"))
+    assert_equal(''           , Madowu::HtmlGenerator.get_title("test/directorymapper/empty.md"))
+    assert_equal('title file1', Madowu::HtmlGenerator.get_title("test/directorymapper/file1.md"))
+    assert_equal('head' , Madowu::HtmlGenerator.get_title("test/directorymapper/head.md"))
+    assert_equal(''           , Madowu::HtmlGenerator.get_title("test/empty.md"))
+    assert_equal(''           , Madowu::HtmlGenerator.get_title("test/head.md"))
+    assert_equal(''           , Madowu::HtmlGenerator.get_title("test/head1.md"))
+    assert_equal(''           , Madowu::HtmlGenerator.get_title("test/head_pandoc.md"))
+    assert_equal(''           , Madowu::HtmlGenerator.get_title("test/subdir/empty.md"))
+
+  end
+
 end
 

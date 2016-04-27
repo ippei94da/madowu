@@ -1,6 +1,10 @@
 = THIS_GEM changelog
 
-== Master (for 0.0.6)
+== Master (for 0.0.7)
+
+== Version 0.0.6 [2016-04-27]
+* Adjust to pandoc style title
+
 == Version 0.0.5 [2016-04-25]
 * Bugfix of 'madowu --outline' for pandoc.
 

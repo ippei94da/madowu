@@ -34,9 +34,9 @@ class TC_Klass < Test::Unit::TestCase
     correct << ""
     correct << "Current directory:"
     correct << ""
-    correct << "* [dir/](dir/index.html) (dir_index_md)"
-    correct << "* [foo.html](foo.html) (foo_md)"
-    correct << "* [index.html](index.html) (title_index.html)"
+    correct << "* [dir/](dir/index.html) (dir index md)"
+    correct << "* [foo.html](foo.html) (foo md)"
+    correct << "* [index.html](index.html) (title index.html)"
     assert_equal(correct, Madowu::DirectoryMapper.dirmap("test/directorymapper/dir2"))
   end
 
@@ -49,7 +49,7 @@ class TC_Klass < Test::Unit::TestCase
 
     # markdown without heading
     
-    assert_equal('head1',
+    assert_equal('head',
       Madowu::DirectoryMapper.get_title('test/directorymapper/head.md')
     )
 

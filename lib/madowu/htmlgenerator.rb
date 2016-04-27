@@ -20,7 +20,12 @@ class Madowu::HtmlGenerator
   #end
 
   def self.get_title(md_file)
-    `grep -E '^#' #{md_file} | head -n 1`.sub(/^#\s*/, '').strip
+    #`grep -E '^#' #{md_file} | head -n 1`.sub(/^#\s*/, '').strip
+    result = ''
+    str = `head -n 1 #{md_file}`
+    pattern = /^%\s*/
+    result = str.sub(/^%\s*/, '').chomp if pattern =~ str
+    result
   end
 
   # 'title' element in head is set as first /^#/ in md_file.
