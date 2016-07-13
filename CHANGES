@@ -2,19 +2,25 @@
 
 == Master (for 0.0.7)
 
+* /bin/madowu is abolished
+
 == Version 0.0.6 [2016-04-27]
+
 * Adjust to pandoc style title
 
 == Version 0.0.5 [2016-04-25]
+
 * Bugfix of 'madowu --outline' for pandoc.
 
 == Version 0.0.4 [2016-04-23]
+
 * bin/urltitle was added
 * bin/isbninfo was added
 * 'madowu --outline' was adjusted to pandoc style md file
 * bin/dirmap changed to find only *.html, ignore else.
 
 == Version 0.0.3 [2016-02-26]
+
 * bin/
     * modify 'madowu' command
         * add -O (--outline-selflink) option.
@@ -34,10 +40,13 @@
 * lib/htmlgenerator.rb, <HTML> header to <html> in HtmlGenerator.generate 
 
 == Version 0.0.2 [2015-10-20]
+
 * Add -C (--charset) option and default encoding is set to be 'us-ascii'
 
 == Version 0.0.1 [2015-10-20]
+
 * Add ' ' into title in dirmap.
 
 == Version 0.0.0 [2015-10-20]
+
 First release.

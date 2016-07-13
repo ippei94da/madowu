@@ -18,8 +18,6 @@ op.banner = [
 ].join("\n")
 op.on("-v"    , "--verbose"    , "Output to stdout too"){ options[:verbose] = true}
 op.on("-f"    , "--force"      , "Force output"){ options[:force] = true}
-#op.on("-a"    , "--aho"    , "descriptionA"){    options[:aho] = true}
-#op.on("-b val", "--bak=val", "descriptionB"){|v| options[:bak] = v}
 op.parse!(ARGV)
 
 if ARGV.size > 1
@@ -36,17 +34,15 @@ end
 def should_update?(options, outfile, new_contents)
   return true if options[:force]
   return true unless FileTest.exist? outfile
-
-  old_contents = File.open(outfile, "r").readlines.map{|i| i.chomp}
-  return false if old_contents == new_contents
-
+  return false if new_contents == File.open(outfile, "r").readlines.map{|i| i.chomp}
+  #old_contents = File.open(outfile, "r").readlines.map{|i| i.chomp}
+  #return false if old_contents == new_contents
   return true
 end
 
 outfile = DEFAULT_OUTFILE
 contents = Madowu::DirectoryMapper.dirmap(dir)
 
-#pp contents
 if should_update?(options, outfile, contents)
   io = File.open(outfile, 'w')
   io.puts contents

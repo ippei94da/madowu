@@ -1,42 +1,45 @@
 #! /usr/bin/env ruby
 # coding: utf-8
 
-require "optparse"
-require "pp"
-require "fileutils"
-require "madowu"
+push "'madowu' command is already obsoleted. Use 'pandoc'."
+exit
 
-ENCODING = "UTF-8"
-HTML2PDF = "wkhtmltopdf"
-HTML2PDF_OPTIONS = "-B 1cm -L 1.5cm -R 1.5cm -T 1.5cm -s A4 --encoding #{ENCODING} "
-
-### option analysis
-OPTIONS = {}
-op = OptionParser.new
-op.banner = [
-  "Usage: #{File.basename("#{__FILE__}")} [options] foo.md",
-  "       You can see help with '#{File.basename("#{__FILE__}")} --help'.",
-].join("\n")
-op.on("-c css_file", "--css=file", "Indicate css file"){|v| OPTIONS[:css] = v}
-op.on("-C charset", "--charset=str", "Indicate charset like 'UTF-8'"){|v| OPTIONS[:charset] = v}
-op.on("-o"    , "--outline"    , "Embed outline"){    OPTIONS[:outline] = true}
-op.on("-O"    , "--outline-selflink", "Embed outline with link to the line"){
-  OPTIONS[:outline] = true
-  OPTIONS[:selflink] = true
-}
-#op.on("-d"    , "--dirmap-side", "Embed sideber of directory map"){OPTIONS[:dirmap] = true}
-op.on("-s file"    , "--side=md_file", "Read Markdown file for sidebar"){|v|OPTIONS[:sidebar] = v}
-op.on("-m markdown"    , "--markdown=command", "Indicate Markdown command"){|v| OPTIONS[:markdown] = v}
-op.parse!(ARGV)
-
-#pp OPTIONS
-
-unless ARGV.size == 1
-  puts op.banner
-  exit
-end
-
-md_file = ARGV[0]
-html_file = md_file.sub(/\.md/, ".html")
-hg = Madowu::HtmlGenerator.new(md_file, OPTIONS[:markdown])
-File.open(html_file, "w") { |io| io.puts hg.generate(OPTIONS) }
+#require "optparse"
+#require "pp"
+#require "fileutils"
+#require "madowu"
+#
+#ENCODING = "UTF-8"
+#HTML2PDF = "wkhtmltopdf"
+#HTML2PDF_OPTIONS = "-B 1cm -L 1.5cm -R 1.5cm -T 1.5cm -s A4 --encoding #{ENCODING} "
+#
+#### option analysis
+#OPTIONS = {}
+#op = OptionParser.new
+#op.banner = [
+#  "Usage: #{File.basename("#{__FILE__}")} [options] foo.md",
+#  "       You can see help with '#{File.basename("#{__FILE__}")} --help'.",
+#].join("\n")
+#op.on("-c css_file", "--css=file", "Indicate css file"){|v| OPTIONS[:css] = v}
+#op.on("-C charset", "--charset=str", "Indicate charset like 'UTF-8'"){|v| OPTIONS[:charset] = v}
+#op.on("-o"    , "--outline"    , "Embed outline"){    OPTIONS[:outline] = true}
+#op.on("-O"    , "--outline-selflink", "Embed outline with link to the line"){
+#  OPTIONS[:outline] = true
+#  OPTIONS[:selflink] = true
+#}
+##op.on("-d"    , "--dirmap-side", "Embed sideber of directory map"){OPTIONS[:dirmap] = true}
+#op.on("-s file"    , "--side=md_file", "Read Markdown file for sidebar"){|v|OPTIONS[:sidebar] = v}
+#op.on("-m markdown"    , "--markdown=command", "Indicate Markdown command"){|v| OPTIONS[:markdown] = v}
+#op.parse!(ARGV)
+#
+##pp OPTIONS
+#
+#unless ARGV.size == 1
+#  puts op.banner
+#  exit
+#end
+#
+#md_file = ARGV[0]
+#html_file = md_file.sub(/\.md/, ".html")
+#hg = Madowu::HtmlGenerator.new(md_file, OPTIONS[:markdown])
+#File.open(html_file, "w") { |io| io.puts hg.generate(OPTIONS) }
