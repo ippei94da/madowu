@@ -22,7 +22,7 @@ require "pathname"
 desc "update .dirmap.md if directory changed."
 file DIRMAP_MD => :dirmap_command
 task :dirmap_command do
-  sh "dirmap"
+  sh "dirmap" # You can use --kakasi option if the command installed
 end
 
 ## *.html

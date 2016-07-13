@@ -1,12 +1,45 @@
 #! /usr/bin/env ruby
 
-require 'pp'
-require 'nokogiri'
-require "open-uri"
 
-ARGF.each do |url|
-  url.chomp!
-  html = open(url)
-  doc = Nokogiri::HTML.parse(html)
-  puts "[#{doc.title}](#{url})"
+require "open-uri"
+require "optparse"
+require "tefil.rb"
+require 'nokogiri'
+require 'pp'
+require 'uri'
+
+class UrlTitle < Tefil::TextFilterBase
+  def initialize(options = {})
+    super(options)
+  end
+
+  def process_stream(in_io, out_io)
+    in_io.each do |line|
+      URI.extract(line).each do |uri|
+        begin
+          html = open(uri)
+          doc = Nokogiri::HTML.parse(html)
+          line.gsub!(uri, "[#{doc.title}](#{uri})")
+        rescue #rescue Errno::ENOENT
+          #do nothing
+        end
+      end
+      out_io.puts line
+    end
+  end
 end
+
+## option analysis
+options = {}
+op = OptionParser.new
+op.banner = [
+  "Usage: #{File.basename("#{__FILE__}")} [options]",
+].join("\n")
+op.on("-o"    , "--overwrite"    , "Overwrite"){    options[:overwrite] = true}
+op.parse!(ARGV)
+
+options[:overwrite] ||= false
+
+ut = UrlTitle.new(options)
+ut.filter(ARGV)
+

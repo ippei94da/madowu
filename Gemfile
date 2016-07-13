@@ -12,4 +12,5 @@ group :development do
   gem "jeweler", "~> 2.0"
   gem "simplecov", "~> 0.11"
   gem 'amazon-ecs', "~> 2.4"
+  gem 'tefil', "~> 0.1"
 end

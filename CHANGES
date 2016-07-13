@@ -3,7 +3,8 @@
 == Master (for 0.0.7)
 
 * /bin/madowu is abolished
-*  Add /bin/dirmap --kakasi
+* Add /bin/dirmap --kakasi
+* bin/urltitle can substitute partial strings in lines
 
 == Version 0.0.6 [2016-04-27]
 
