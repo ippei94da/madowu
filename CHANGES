@@ -1,9 +1,12 @@
 = THIS_GEM changelog
 
-== Master (for 0.0.7)
+<!-- Master -->
+
+== Version 0.0.7 [2016-07-14]
 
 * /bin/madowu is abolished
 * Add /bin/dirmap --kakasi
+* Simplify output of /bin/dirmap
 * bin/urltitle can substitute partial strings in lines
 
 == Version 0.0.6 [2016-04-27]
