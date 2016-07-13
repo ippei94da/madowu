@@ -18,6 +18,7 @@ op.banner = [
 ].join("\n")
 op.on("-v"    , "--verbose"    , "Output to stdout too"){ options[:verbose] = true}
 op.on("-f"    , "--force"      , "Force output"){ options[:force] = true}
+op.on("-k"    , "--kakasi"     , "Sort by Japanese yomi"){ options[:kakasi] = true}
 op.parse!(ARGV)
 
 if ARGV.size > 1
@@ -41,7 +42,7 @@ def should_update?(options, outfile, new_contents)
 end
 
 outfile = DEFAULT_OUTFILE
-contents = Madowu::DirectoryMapper.dirmap(dir)
+contents = Madowu::DirectoryMapper.dirmap(dir, options[:kakasi])
 
 if should_update?(options, outfile, contents)
   io = File.open(outfile, 'w')

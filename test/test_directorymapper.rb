@@ -12,20 +12,20 @@ class TC_Klass < Test::Unit::TestCase
   #end
 
   def test_map
-    #correct = []
-    #correct << "<p>Parent directory:</p>"
-    #correct << "<ul>"
-    #correct << "  <li> <a href='../'>../</a>"
-    #correct << "</ul>"
-    #correct << "<p>Current directory:</p>"
-    #correct << "<ul>"
-    #correct << "  <li> <a href='dir/index.html'>dir/</a> (dir_index_md)"
-    #correct << "  <li> <a href='foo.html'>foo.html</a> (foo_md)"
-    #correct << "  <li> <a href='index.html'>index.html</a> (title_index.html)"
-    #correct << "</ul>"
-    #assert_equal(correct, Madowu::DirectoryMapper.dirmap("test/directorymapper/dir2"))
-
-    ##pp Madowu::DirectoryMapper.dirmap("/home/ippei/doc/bookmark/")
+    correct = []
+    correct << "Parent directory:"
+    correct << ""
+    correct << "* [../](../)"
+    correct << ""
+    correct << "Current directory:"
+    correct << ""
+    correct << "* [dir index md](dir/index.html)"
+    correct << "* [foo md](foo.html)"
+    correct << "* [title index.html](index.html)"
+    #correct << "* [dir/](dir/index.html) (dir index md)"
+    #correct << "* [foo.html](foo.html) (foo md)"
+    #correct << "* [index.html](index.html) (title index.html)"
+    assert_equal(correct, Madowu::DirectoryMapper.dirmap("test/directorymapper/dir2"))
 
     correct = []
     correct << "Parent directory:"
@@ -34,11 +34,31 @@ class TC_Klass < Test::Unit::TestCase
     correct << ""
     correct << "Current directory:"
     correct << ""
-    correct << "* [dir/](dir/index.html) (dir index md)"
-    correct << "* [foo.html](foo.html) (foo md)"
-    correct << "* [index.html](index.html) (title index.html)"
-    assert_equal(correct, Madowu::DirectoryMapper.dirmap("test/directorymapper/dir2"))
+    correct << "* [生、なま](nama.html)"
+    correct << "* [生まれる、うまれる](umareru.html)"
+    correct << "* [生やす、はやす](hayasu.html)"
+    correct << "* [生命、せいめい](seimei.html)"
+    correct << "* [生涯、しょうがい](shougai.html)"
+    correct << "* [生糸、きいと](kiito.html)"
+    assert_equal(correct, Madowu::DirectoryMapper.dirmap("test/directorymapper/japanese"))
+
+    correct = []
+    correct << "Parent directory:"
+    correct << ""
+    correct << "* [../](../)"
+    correct << ""
+    correct << "Current directory:"
+    correct << ""
+    correct << "* [生まれる、うまれる](umareru.html)"
+    correct << "* [生糸、きいと](kiito.html)"
+    correct << "* [生涯、しょうがい](shougai.html)"
+    correct << "* [生命、せいめい](seimei.html)"
+    correct << "* [生、なま](nama.html)"
+    correct << "* [生やす、はやす](hayasu.html)"
+    assert_equal(correct, Madowu::DirectoryMapper.dirmap("test/directorymapper/japanese", true))
   end
+
+
 
   def test_get_title
     # markdown without heading
@@ -48,7 +68,7 @@ class TC_Klass < Test::Unit::TestCase
     )
 
     # markdown without heading
-    
+
     assert_equal('head',
       Madowu::DirectoryMapper.get_title('test/directorymapper/head.md')
     )
@@ -62,8 +82,6 @@ class TC_Klass < Test::Unit::TestCase
     assert_equal('dir1/',
       Madowu::DirectoryMapper.get_title('test/directorymapper/dir1')
     )
-
-
   end
 
 end
